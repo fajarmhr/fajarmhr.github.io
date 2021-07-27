@@ -473,7 +473,7 @@ a.mobile-btn{
 }
 
 
-.exp .hgroup h6 span.current {
+.exp .hgroup h6 span.current , .edu .hgroup h6 span.current {
     background: #199cdb;
     border-radius: 6px;
 	-moz-border-radius:6px;
