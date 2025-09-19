@@ -21,6 +21,8 @@
 
 /* Reset & Basics (Inspired by E. Meyers)*/
 
+
+
 *, *:before, *:after {
     -moz-box-sizing: border-box;
 	-webkit-box-sizing :border-box;
@@ -251,20 +253,43 @@ iframe{
 	}
 	
 	
-	.block-teaser h3, .name-profile h5 span, .block-about.one h5 , .block-table .table h6,
+	.block-teaser h3, .name-profile h5 span, .block-table .table h6,
 	.block-single h1.large-title, .socials.round li a, .testi-details .td blockquote{
 		font-family: "open_sanslight",Arial,sans-serif;
 	}
 	
+
+	.block-about.one h5 {
+		font-family: 'titilliumregular_upright',Arial,sans-serif;
+	}
 	
+
+	.block-about li {
+		font-family: "open_sansregular",Arial,sans-serif;
+	}
 	
 	 .block-price span.price, .post-details h4 a,.post-details h4, .block-about ul.info span, .exp-det h6, .exp .hgroup h4, .edu .hgroup h4, .blog-widget h6, .author a, .serv-det h5, .info-det h5, .block-feed h6, .skill-list h4 {
-	    font-family: "open_sansbold",Arial,sans-serif;
+	    /* font-family: "open_sansregular",Arial,sans-serif; */
+		font-family: "open_sanssemibold",Arial, sans-serif;
+		font-size: 105%;
 	}
 	
 	
-	.exp .hgroup h6 , .edu .hgroup h6 , .ast-list ul li {
+	.exp .hgroup h6 , .edu .hgroup h6 , i {
+	    font-family: "open_sanssemibold_italic",Arial,sans-serif;
+		font-size: 98%;
+	}
+
+
+	.ast-list ul li {
 	    font-family: "open_sansitalic",Arial,sans-serif;
+		font-size: 98%;
+	}
+
+
+	.futer, .edu .hgroup h5 , p {
+	    font-family: "open_sansregular",Arial,sans-serif;
+		font-size: 98%;
 	}
 	
 	
@@ -329,7 +354,8 @@ iframe{
 
 
 	.but.brd{
-		background:none;
+		/* background:none; */
+		background:#ffffff;
 		border:2px solid #199cdb;
 		color:#199cdb;
 	}
