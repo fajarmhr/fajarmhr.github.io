@@ -20,7 +20,6 @@ export const profile = {
   location: "South Jakarta, Indonesia · open to remote / relocation",
   available: "Open to Cloud · DevOps · Platform · SRE roles",
   email: "mf.mahardika@gmail.com",
-  phone: "+62 812-3252-2330",
   photo: "", // put a file in /public (e.g. /public/me.jpg) and set this to "/me.jpg"
   links: [
     { label: "GitHub", href: "https://github.com/fajarmhr", handle: "fajarmhr" },
