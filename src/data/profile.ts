@@ -28,11 +28,13 @@ export const profile = {
 };
 
 // Résumé is pulled LIVE from your CV Builder app (deployed on Vercel).
-// Publish a résumé there, copy its share token, and paste both below.
-// The portfolio shows an on-screen preview that always reflects the latest version.
+// Values come from the ENVIRONMENT so the token is never committed:
+//   • locally:  copy .env.example → .env and fill it in
+//   • on CI:    add them as GitHub repo Secrets (Settings → Secrets → Actions)
+// Leave them unset to show the "Connect your CV Builder" message.
 export const resume = {
-  appUrl: "https://your-cv-app.vercel.app", // your CV Builder base URL
-  token: "",                                // the published résumé's share token
+  appUrl: import.meta.env.RESUME_APP_URL ?? "",
+  token: import.meta.env.RESUME_TOKEN ?? "",
 };
 
 export const about: string[] = [

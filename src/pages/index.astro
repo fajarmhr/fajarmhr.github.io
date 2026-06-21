@@ -175,9 +175,9 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
             <div class="resume-empty">
               <div class="serif-it">Connect your CV Builder</div>
               <p>
-                Publish a résumé in your CV Builder app, then set <code>appUrl</code> and
-                <code>token</code> in <code>src/data/profile.ts</code>. Your latest résumé
-                will appear here automatically.
+                Publish a résumé in your CV Builder app, then set <code>RESUME_APP_URL</code>
+                and <code>RESUME_TOKEN</code> in your <code>.env</code> (or GitHub repo
+                Secrets). Your latest résumé will appear here automatically.
               </p>
             </div>
           )}

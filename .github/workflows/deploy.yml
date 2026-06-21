@@ -23,6 +23,11 @@ jobs:
         uses: actions/checkout@v4
       - name: Build with Astro
         uses: withastro/action@v3
+        # Résumé connection (optional). Add these as repo Secrets:
+        #   Settings → Secrets and variables → Actions → New repository secret
+        env:
+          RESUME_APP_URL: ${{ secrets.RESUME_APP_URL }}
+          RESUME_TOKEN: ${{ secrets.RESUME_TOKEN }}
         # If your Astro project is NOT at the repo root, set its path:
         # with:
         #   path: ./astro-portfolio

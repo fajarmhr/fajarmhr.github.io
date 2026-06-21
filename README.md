@@ -32,17 +32,18 @@ skills, education, languages, and the résumé connection. No layout code to tou
 ## 3. Connect the live résumé (CV Builder)
 
 The "View résumé" button shows an **on-screen preview that always reflects your latest
-published CV** — no re-deploy needed.
+published CV** — no re-deploy needed. The values are read from the **environment**, so the
+token never lives in this public repo.
 
 1. In your CV Builder app, **publish** a résumé and copy its **share token**.
-2. In `src/data/profile.ts`, set:
-   ```ts
-   export const resume = {
-     appUrl: "https://your-cv-app.vercel.app", // your deployed CV Builder
-     token:  "the-share-token",
-   };
+2. **Locally:** copy `.env.example` → `.env` and fill it in:
+   ```bash
+   RESUME_APP_URL=https://your-cv-app.vercel.app
+   RESUME_TOKEN=the-share-token
    ```
-3. Commit & push. Updating your CV in the CV Builder updates the portfolio automatically.
+3. **On the live site:** add the same two keys as repository secrets —
+   **Settings → Secrets and variables → Actions → New repository secret**
+   (`RESUME_APP_URL`, `RESUME_TOKEN`). The deploy workflow injects them at build time.
 
 Until configured, the modal shows a friendly "Connect your CV Builder" message.
 
