@@ -44,18 +44,8 @@ export const about: string[] = [
 
 export const projects: Project[] = [
   {
-    title: "Telkomsel — 5G Core Migration",
-    year: "2025–26",
-    role: "PS Core Network Engineer",
-    blurb:
-      "Migrated international roaming traffic from Surabaya to Jakarta core sites with minimal service disruption, and commissioned by.U APN + DPI across nationwide SMF and UPF platforms.",
-    stack: ["5G Core", "SMF", "UPF", "DPI"],
-    metric: "Nationwide 5G Core",
-    href: "#",
-  },
-  {
     title: "Indosat Ooredoo Hutchison",
-    year: "2024–26",
+    year: "Apr 2024 — Aug 2025, Jan 2026 — Present",
     role: "PS Core Network Engineer",
     blurb:
       "Planned and executed 4G CUPS and 5G UPF/SMF capacity expansions across Sumatra and Kalimantan, and stood up a private LTE core — MME, SPGW-C/U and HSS — for an enterprise client (PT RAPP).",
@@ -64,8 +54,18 @@ export const projects: Project[] = [
     href: "#",
   },
   {
+    title: "Telkomsel — 5G Core",
+    year: "Aug 2025 — Jan 2026",
+    role: "PS Core Network Engineer",
+    blurb:
+      "Migrated international roaming traffic from Surabaya to Jakarta core sites with minimal service disruption, and commissioned by.U APN + DPI across nationwide SMF and UPF platforms.",
+    stack: ["5G Core", "SMF", "UPF", "DPI"],
+    metric: "Nationwide 5G Core",
+    href: "#",
+  },
+  {
     title: "XL Axiata — Jakarta Packet Core",
-    year: "2023–24",
+    year: "Jun 2023 — Mar 2024",
     role: "PS Core Network Engineer",
     blurb:
       "Installed, commissioned and cut over the 4G CUPS packet core for the Jakarta region, and migrated MME services for North Sumatra — each serving 10M+ subscribers.",

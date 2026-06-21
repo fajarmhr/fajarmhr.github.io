@@ -58,6 +58,7 @@ a { text-decoration: none; color: inherit; }
 .sec { margin-bottom: 118px; }
 .sec-head { font-family: var(--mono); font-size: 12px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; border-top: 1px solid var(--line-strong); padding-top: 18px; display: flex; justify-content: space-between; }
 .sec-head .n { color: var(--faint); }
+.sec-note { font-family: var(--serif); font-style: italic; font-size: 16px; line-height: 1.5; color: var(--body); max-width: 560px; margin: -26px 0 40px; }
 
 /* work */
 .work-row { display: block; padding: 30px 0; border-bottom: 1px solid var(--line); transition: padding-left .3s ease; }
@@ -145,4 +146,5 @@ a { text-decoration: none; color: inherit; }
   .wrap { padding: 80px 18px 72px; }
   .sec, .two-col { margin-bottom: 84px; }
   .hero { margin-bottom: 84px; }
+  .work-when { white-space: normal; }
 }
