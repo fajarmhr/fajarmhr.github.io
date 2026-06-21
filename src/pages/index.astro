@@ -1,0 +1,232 @@
+---
+import "../styles/global.css";
+import {
+  profile, resume, about, projects, services, skills, experience, education, languages,
+} from "../data/profile";
+
+const year = new Date().getFullYear();
+
+const resumeConfigured =
+  !!(resume.appUrl && resume.token && !/your-cv-app/.test(resume.appUrl));
+const resumeBase = resumeConfigured
+  ? resume.appUrl.replace(/\/+$/, "") + "/api/public/resume/" + encodeURIComponent(resume.token)
+  : "";
+const resumePreview = resumeBase ? resumeBase + "/pdf" : "";
+const resumeDownload = resumeBase ? resumeBase + "/pdf?download=1" : "";
+
+const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{profile.name} — {profile.role}</title>
+    <meta name="description" content={profile.tagline} />
+    <meta property="og:title" content={`${profile.name} — ${profile.role}`} />
+    <meta property="og:description" content={profile.tagline} />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="wrap">
+      <!-- HERO -->
+      <header class="hero reveal">
+        <div>
+          <div class="avail eyebrow"><span class="dot"></span>{profile.available}</div>
+          <h1 class="name">{profile.name}</h1>
+          <p class="tagline">{profile.tagline}</p>
+          <div class="meta">
+            <span class="s">{profile.role}</span>
+            <span class="sep">·</span>
+            <span class="s">{profile.location}</span>
+          </div>
+          <div class="actions">
+            <button id="open-resume" class="pill solid">View résumé <span class="tag">PDF</span></button>
+            {visibleLinks.map((l) => (
+              <a class="pill" href={l.href} target="_blank" rel="noopener">
+                {l.label} <span class="tag">{l.handle}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+        {profile.photo ? (
+          <div class="photo" style={`background-image:url(${profile.photo})`}></div>
+        ) : (
+          <div class="photo"><div class="photo-label">PORTRAIT<br />set profile.photo</div></div>
+        )}
+      </header>
+
+      <!-- SELECTED WORK -->
+      <section class="sec reveal">
+        <div class="sec-head"><span>Selected Work</span><span class="n">01</span></div>
+        {projects.map((p) => (
+          <a class="work-row reveal" href={p.href}>
+            <div class="work-top">
+              <h3 class="work-title">{p.title}</h3>
+              <span class="work-when">{p.year} · {p.role}</span>
+            </div>
+            <p class="work-blurb">{p.blurb}</p>
+            <div class="work-foot">
+              <span class="metric">{p.metric}</span>
+              <div class="chips">{p.stack.map((t) => <span class="chip-stack">{t}</span>)}</div>
+            </div>
+          </a>
+        ))}
+      </section>
+
+      <!-- ABOUT + SKILLS -->
+      <section class="two-col reveal">
+        <div>
+          <div class="col-label">About · 02</div>
+          {about.map((para) => <p class="about-p">{para}</p>)}
+        </div>
+        <div>
+          <div class="col-label">Skills</div>
+          {skills.map((s) => (
+            <div class="skill-group">
+              <div class="g">{s.group}</div>
+              <div class="chips">{s.items.map((it) => <span class="chip">{it}</span>)}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="sec reveal">
+        <div class="sec-head"><span>Experience</span><span class="n">03</span></div>
+        {experience.map((e) => (
+          <div class="exp-row reveal">
+            <div class="exp-period">{e.period}</div>
+            <div>
+              <h4 class="exp-role">{e.role}</h4>
+              <div class="exp-company">{e.company}</div>
+              {e.points.map((pt) => <p class="exp-point">{pt}</p>)}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <!-- EDUCATION + LANGUAGES -->
+      <section class="two-col reveal">
+        <div>
+          <div class="col-label tb">Education</div>
+          {education.map((ed) => (
+            <div class="edu">
+              <div class="edu-top">
+                <h4 class="edu-school">{ed.school}</h4>
+                <span class="edu-when">{ed.period}</span>
+              </div>
+              <div class="edu-detail">{ed.degree} · {ed.detail}</div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <div class="col-label tb">Languages</div>
+          {languages.map((lg) => <div class="lang">{lg}</div>)}
+        </div>
+      </section>
+
+      <!-- WHAT I BRING -->
+      <section class="sec reveal">
+        <div class="sec-head"><span>What I Bring</span><span class="n">04</span></div>
+        <div class="focus-grid">
+          {services.map((sv) => (
+            <div class="focus"><h4>{sv.title}</h4><p>{sv.desc}</p></div>
+          ))}
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="contact reveal">
+        <div class="col-label">Get in touch · 05</div>
+        <a class="contact-mail" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <div class="contact-phone">{profile.phone}</div>
+      </section>
+    </main>
+
+    <footer class="foot">{profile.name} · {year}</footer>
+
+    <!-- RÉSUMÉ PREVIEW MODAL -->
+    <div id="resume-modal" class="overlay" data-preview={resumePreview}>
+      <div class="sheet">
+        <div class="sheet-head">
+          <span class="serif">Résumé</span>
+          <span class="mono">live from CV Builder</span>
+          <div class="sheet-actions">
+            {resumeConfigured && (
+              <a class="btn-ghost-sm" href={resumePreview} target="_blank" rel="noopener">Open ↗</a>
+            )}
+            {resumeConfigured && (
+              <a class="btn-solid-sm" href={resumeDownload} target="_blank" rel="noopener">Download</a>
+            )}
+            <button class="btn-x" data-close-resume aria-label="Close">✕</button>
+          </div>
+        </div>
+        <div class="sheet-body">
+          {resumeConfigured ? (
+            <iframe id="resume-frame" title="Résumé preview"></iframe>
+          ) : (
+            <div class="resume-empty">
+              <div class="serif-it">Connect your CV Builder</div>
+              <p>
+                Publish a résumé in your CV Builder app, then set <code>appUrl</code> and
+                <code>token</code> in <code>src/data/profile.ts</code>. Your latest résumé
+                will appear here automatically.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── scroll reveal ──
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+      if (reduce) {
+        els.forEach((e) => e.classList.add("in"));
+      } else {
+        const check = () => {
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          els.forEach((e) => {
+            if (!e.classList.contains("in") && e.getBoundingClientRect().top < vh * 0.92) {
+              e.classList.add("in");
+            }
+          });
+        };
+        window.addEventListener("scroll", check, { passive: true });
+        window.addEventListener("resize", check);
+        requestAnimationFrame(() => requestAnimationFrame(check));
+        setTimeout(check, 400);
+      }
+
+      // ── résumé modal ──
+      const modal = document.getElementById("resume-modal");
+      const frame = document.getElementById("resume-frame") as HTMLIFrameElement | null;
+      const openBtn = document.getElementById("open-resume");
+      const preview = modal?.dataset.preview || "";
+      const open = () => {
+        if (!modal) return;
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+        if (frame && preview && !frame.getAttribute("src")) frame.setAttribute("src", preview);
+      };
+      const close = () => {
+        if (!modal) return;
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+      };
+      openBtn?.addEventListener("click", open);
+      modal?.addEventListener("click", (e) => { if (e.target === modal) close(); });
+      document.querySelectorAll("[data-close-resume]").forEach((b) => b.addEventListener("click", close));
+      window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+    </script>
+  </body>
+</html>
