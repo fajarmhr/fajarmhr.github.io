@@ -23,6 +23,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Build with Astro
         uses: withastro/action@v3
+        with:
+          # Astro 6 requires Node >=22.12.0 (the action defaults to Node 20).
+          node-version: 22
         # Résumé connection (optional). Add these as repo Secrets:
         #   Settings → Secrets and variables → Actions → New repository secret
         env:
@@ -30,9 +33,7 @@ jobs:
           RESUME_TOKEN: ${{ secrets.RESUME_TOKEN }}
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
           CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
-        # If your Astro project is NOT at the repo root, set its path:
-        # with:
-        #   path: ./astro-portfolio
+        # If your Astro project is NOT at the repo root, add `path: ./subdir` under `with:` above.
 
   deploy:
     needs: build
