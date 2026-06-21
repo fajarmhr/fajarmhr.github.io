@@ -65,7 +65,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
 
       <!-- SELECTED WORK -->
       <section class="sec reveal">
-        <div class="sec-head"><span>Selected Work</span><span class="n">01</span></div>
+        <div class="sec-head"><span>Selected Work</span></div>
         {projects.map((p) => (
           <a class="work-row reveal" href={p.href}>
             <div class="work-top">
@@ -84,7 +84,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
       <!-- ABOUT + SKILLS -->
       <section class="two-col reveal">
         <div>
-          <div class="col-label">About · 02</div>
+          <div class="col-label">About</div>
           {about.map((para) => <p class="about-p">{para}</p>)}
         </div>
         <div>
@@ -100,7 +100,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
 
       <!-- EXPERIENCE -->
       <section class="sec reveal">
-        <div class="sec-head"><span>Experience</span><span class="n">03</span></div>
+        <div class="sec-head"><span>Experience</span></div>
         {experience.map((e) => (
           <div class="exp-row reveal">
             <div class="exp-period">{e.period}</div>
@@ -135,7 +135,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
 
       <!-- WHAT I BRING -->
       <section class="sec reveal">
-        <div class="sec-head"><span>What I Bring</span><span class="n">04</span></div>
+        <div class="sec-head"><span>What I Bring</span></div>
         <div class="focus-grid">
           {services.map((sv) => (
             <div class="focus"><h4>{sv.title}</h4><p>{sv.desc}</p></div>
@@ -145,7 +145,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
 
       <!-- CONTACT -->
       <section class="contact reveal">
-        <div class="col-label">Get in touch · 05</div>
+        <div class="col-label">Get in touch</div>
         <a class="contact-mail" href={`mailto:${profile.email}`}>{profile.email}</a>
       </section>
     </main>

@@ -38,8 +38,8 @@ export const resume = {
 };
 
 export const about: string[] = [
-  "I'm a cloud infrastructure engineer at Huawei Indonesia, operating mission-critical OpenStack platforms that carry the 4G and 5G core networks for the country's top three operators. My work lives where reliability isn't optional — millions of subscribers and hundreds of gigabits of production traffic.",
-  "I'm most at home removing operational toil: Python health-checks, YAML-defined infrastructure, and lifecycle management of virtualized and containerized network functions. I'm now focused on cloud platform, DevOps and SRE roles where that operational rigor is the job.",
+  "I'm a Cloud Infrastructure Engineer at Huawei Indonesia, operating mission-critical OpenStack-based platforms (Huawei FusionSphere) that carry the 4G and 5G core networks behind Indonesia's largest mobile operators — millions of subscribers and hundreds of gigabits of live production traffic.",
+  "My day-to-day is infrastructure deployment, capacity expansion, automation and lifecycle management of virtualized (VNF) and cloud-native (CNF) network functions — Linux administration, Python automation and YAML-based Infrastructure as Code. I'm now focused on Cloud, DevOps, Platform Engineering and SRE roles where that operational rigor is the core of the job.",
 ];
 
 export const projects: Project[] = [
@@ -58,8 +58,8 @@ export const projects: Project[] = [
     year: "2024–26",
     role: "PS Core Network Engineer",
     blurb:
-      "Planned and executed 4G CUPS and 5G UPF/SMF capacity expansions across Sumatra and Kalimantan, and stood up a private LTE core (MME, SPGW-C/U, HSS) for an enterprise client.",
-    stack: ["4G CUPS", "5G UPF", "VNF", "MME"],
+      "Planned and executed 4G CUPS and 5G UPF/SMF capacity expansions across Sumatra and Kalimantan, and stood up a private LTE core — MME, SPGW-C/U and HSS — for an enterprise client (PT RAPP).",
+    stack: ["4G CUPS", "5G UPF/SMF", "Private LTE", "VNF"],
     metric: "4.5M+ subscribers · 360+ Gbps",
     href: "#",
   },
@@ -68,19 +68,9 @@ export const projects: Project[] = [
     year: "2023–24",
     role: "PS Core Network Engineer",
     blurb:
-      "Installed, commissioned and cut over the 4G CUPS packet core for the Jakarta region, and migrated MME services for North Sumatra — both serving 10M+ subscribers.",
+      "Installed, commissioned and cut over the 4G CUPS packet core for the Jakarta region, and migrated MME services for North Sumatra — each serving 10M+ subscribers.",
     stack: ["4G CUPS", "MME", "Packet Core"],
     metric: "10M+ subscribers · 200+ Gbps",
-    href: "#",
-  },
-  {
-    title: "Open-Source 5G Core Research",
-    year: "2023",
-    role: "Mobile Core Analyst",
-    blurb:
-      "Built and analyzed an open-source 5G core, tracing subscriber registration across AMF, SMF and UPF — the basis for a Sinta-2 indexed journal publication.",
-    stack: ["5G Core", "AMF / SMF / UPF", "Open5GS"],
-    metric: "Published research",
     href: "#",
   },
 ];
@@ -104,17 +94,18 @@ export const experience: ExperienceItem[] = [
     role: "Intermediate Cloud Core Engineer",
     period: "Jun 2023 — Present",
     points: [
-      "Operate large-scale OpenStack (Huawei FusionSphere) infrastructure carrying mission-critical telecom core services at national scale.",
-      "Build Python automation for infrastructure health checks, monitoring validation and operational reporting across cloud, server and storage.",
-      "Lead deployment, upgrade and capacity expansion of 4G/5G core workloads on VMs and containers, across multi-vendor teams.",
+      "Administer large-scale Huawei FusionSphere (OpenStack-based) cloud infrastructure supporting mission-critical telecom core network services at national scale.",
+      "Perform Linux administration, troubleshooting and performance optimization across virtualized compute, storage and networking environments.",
+      "Build and maintain Python automation for infrastructure health checks, monitoring validation and operational reporting across cloud, server and storage.",
+      "Support deployment, commissioning, upgrade and capacity expansion of 4G/5G core workloads on VMs and containers (VNF/CNF), across multi-vendor teams.",
     ],
   },
   {
-    company: "Basic & Applied Research, Telkom University",
+    company: "Basic and Applied Research, Telkom University",
     role: "Mobile Core Analyst",
     period: "Mar 2023",
     points: [
-      "Analyzed 5G Core network functions (AMF, SMF, UPF), tracing the subscriber registration flow for a Sinta-2 journal publication.",
+      "Implemented and analyzed an open-source 5G network as a thesis follow-up, tracing the subscriber registration flow across 5G Core NFs (AMF, SMF, UPF) — published in a Sinta-2 indexed journal.",
     ],
   },
 ];
