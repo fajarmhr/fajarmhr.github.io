@@ -1,0 +1,18 @@
+---
+// Renders one labelled row of technology chips (Core Network / Infrastructure /
+// Automation). Returns nothing when the group is empty, so cards stay clean.
+interface Props {
+  label: string;
+  items: string[];
+}
+const { label, items } = Astro.props;
+---
+
+{items.length > 0 && (
+  <div class="tech-group">
+    <span class="tech-label">{label}</span>
+    <div class="tech-chips">
+      {items.map((t) => <span class="tech-chip">{t}</span>)}
+    </div>
+  </div>
+)}

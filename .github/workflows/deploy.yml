@@ -28,6 +28,8 @@ jobs:
         env:
           RESUME_APP_URL: ${{ secrets.RESUME_APP_URL }}
           RESUME_TOKEN: ${{ secrets.RESUME_TOKEN }}
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+          CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
         # If your Astro project is NOT at the repo root, set its path:
         # with:
         #   path: ./astro-portfolio

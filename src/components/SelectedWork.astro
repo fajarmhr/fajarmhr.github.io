@@ -1,0 +1,16 @@
+---
+// The Selected Work section: an intro line + the impact-led project list.
+import ProjectCard from "./ProjectCard.astro";
+import { projects } from "../data/profile";
+---
+
+<section class="sec reveal">
+  <div class="work-head">
+    <span class="eyebrow">Selected work</span>
+  </div>
+  <p class="sec-note">
+    Carrier-grade packet-core delivery for Indonesia's top operators, each
+    measured by the subscribers and live traffic it kept online.
+  </p>
+  {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+</section>

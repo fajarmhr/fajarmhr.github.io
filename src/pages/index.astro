@@ -1,7 +1,9 @@
 ---
 import "../styles/global.css";
+import SelectedWork from "../components/SelectedWork.astro";
 import {
-  profile, resume, about, projects, services, skills, experience, education, languages,
+  profile, resume, about, services, skills, experience, education, languages,
+  certifications, awards,
 } from "../data/profile";
 
 const year = new Date().getFullYear();
@@ -22,9 +24,9 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{profile.name} — {profile.role}</title>
+    <title>{profile.name} · {profile.role}</title>
     <meta name="description" content={profile.tagline} />
-    <meta property="og:title" content={`${profile.name} — ${profile.role}`} />
+    <meta property="og:title" content={`${profile.name} · ${profile.role}`} />
     <meta property="og:description" content={profile.tagline} />
     <meta property="og:type" content="website" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -63,27 +65,8 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
         )}
       </header>
 
-      <!-- SELECTED WORK -->
-      <section class="sec reveal">
-        <div class="sec-head"><span>Selected Work</span></div>
-        <p class="sec-note">Carrier-grade engagements delivered as part of Huawei Indonesia.</p>
-        {projects.map((p) => (
-          <a class="work-row reveal" href={p.href}>
-            <div class="work-top">
-              <h3 class="work-title">{p.title}</h3>
-              <span class="work-when">{p.year} · {p.role}</span>
-            </div>
-            <p class="work-blurb">{p.blurb}</p>
-            <div class="work-foot">
-              <span class="metric">{p.metric}</span>
-              <div class="chips">{p.stack.map((t) => <span class="chip-stack">{t}</span>)}</div>
-            </div>
-          </a>
-        ))}
-      </section>
-
-      <!-- ABOUT + SKILLS -->
-      <section class="two-col reveal">
+      <!-- ABOUT + SKILLS (moved directly under the hero) -->
+      <section class="two-col tb-sec reveal">
         <div>
           <div class="col-label">About</div>
           {about.map((para) => <p class="about-p">{para}</p>)}
@@ -98,6 +81,9 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
           ))}
         </div>
       </section>
+
+      <!-- SELECTED WORK -->
+      <SelectedWork />
 
       <!-- EXPERIENCE -->
       <section class="sec reveal">
@@ -134,9 +120,37 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
         </div>
       </section>
 
+      <!-- CERTIFICATIONS + AWARDS -->
+      <section class="two-col reveal">
+        <div>
+          <div class="col-label tb">Certifications</div>
+          {certifications.map((c) => (
+            <div class="edu">
+              <div class="edu-top">
+                <h4 class="edu-school">{c.name}</h4>
+                <span class="edu-when">{c.date}</span>
+              </div>
+              <div class="edu-detail">{c.issuer}{c.credentialId ? ` · ID ${c.credentialId}` : ""}</div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <div class="col-label tb">Awards</div>
+          {awards.map((a) => (
+            <div class="edu">
+              <div class="edu-top">
+                <h4 class="edu-school">{a.title}</h4>
+                <span class="edu-when">{a.date}</span>
+              </div>
+              <div class="edu-detail">{a.issuer}{a.detail ? ` · ${a.detail}` : ""}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <!-- WHAT I BRING -->
       <section class="sec reveal">
-        <div class="sec-head"><span>What I Bring</span></div>
+        <div class="sec-head"><span>What I bring</span></div>
         <div class="focus-grid">
           {services.map((sv) => (
             <div class="focus"><h4>{sv.title}</h4><p>{sv.desc}</p></div>
@@ -176,9 +190,9 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
             <div class="resume-empty">
               <div class="serif-it">Connect your CV Builder</div>
               <p>
-                Publish a résumé in your CV Builder app, then set <code>RESUME_APP_URL</code>
-                and <code>RESUME_TOKEN</code> in your <code>.env</code> (or GitHub repo
-                Secrets). Your latest résumé will appear here automatically.
+                Publish a résumé in your CV Builder app, then set <code>appUrl</code> and
+                <code>token</code> in <code>src/data/profile.ts</code>. Your latest résumé
+                will appear here automatically.
               </p>
             </div>
           )}

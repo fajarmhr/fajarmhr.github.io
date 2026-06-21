@@ -1,0 +1,63 @@
+---
+// A single Selected-Work entry. Hierarchy is impact-first:
+//   metrics → project → role → summary → grouped tech → optional breakdown.
+// The expandable breakdown uses a native <details> element — zero JavaScript,
+// accessible by default, and works without hydration.
+import TechnologyGroup from "./TechnologyGroup.astro";
+import type { Project } from "../data/profile";
+
+interface Props {
+  project: Project;
+  index: number;
+}
+const { project, index } = Astro.props;
+const idx = String(index + 1).padStart(2, "0");
+
+const groups = [
+  { label: "Core Network", items: project.tech.core ?? [] },
+  { label: "Infrastructure", items: project.tech.infra ?? [] },
+  { label: "Automation", items: project.tech.automation ?? [] },
+];
+const d = project.details;
+---
+
+<article class="work-row reveal">
+  <div class="work-top">
+    <span class="work-idx">{idx}</span>
+    <h3 class="work-title">{project.title}</h3>
+    <span class="work-when">{project.role} · {project.year}</span>
+  </div>
+
+  <!-- METRIC LEAD — the visual focus -->
+  <div class="metric-lead">
+    {project.metrics.map((m) => (
+      <div class="stat">
+        <div class="stat-val">{m.value}</div>
+        <div class="stat-label">{m.label}</div>
+      </div>
+    ))}
+  </div>
+
+  <p class="work-blurb">{project.blurb}</p>
+
+  <!-- grouped technology -->
+  <div class="tech-groups">
+    {groups.map((g) => <TechnologyGroup label={g.label} items={g.items} />)}
+  </div>
+
+  <!-- expandable Challenge → Action → Result breakdown -->
+  {d && (
+    <details class="proj-details">
+      <summary>
+        <span class="marker" aria-hidden="true">▸</span>
+        Read the full breakdown
+      </summary>
+      <div class="details-grid">
+        <div><div class="d-label">Overview</div><p>{d.overview}</p></div>
+        <div><div class="d-label">Challenge</div><p>{d.challenge}</p></div>
+        <div><div class="d-label">Implementation</div><p>{d.implementation}</p></div>
+        <div><div class="d-label">Outcome</div><p class="d-strong">{d.outcome}</p></div>
+      </div>
+    </details>
+  )}
+</article>
