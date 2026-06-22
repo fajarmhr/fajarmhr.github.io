@@ -14,7 +14,7 @@ const resumeBase = resumeConfigured
   ? resume.appUrl.replace(/\/+$/, "") + "/api/public/resume/" + encodeURIComponent(resume.token)
   : "";
 const resumePreview = resumeConfigured
-  ? resume.appUrl.replace(/\/+$/, "") + "/p/" + encodeURIComponent(resume.token) + "/pdf"
+  ? resume.appUrl.replace(/\/+$/, "") + "/p/" + encodeURIComponent(resume.token)
   : "";
 const resumeDownload = resumeBase ? resumeBase + "/pdf?download=1" : "";
 
