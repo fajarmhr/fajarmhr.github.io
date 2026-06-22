@@ -13,7 +13,9 @@ const resumeConfigured =
 const resumeBase = resumeConfigured
   ? resume.appUrl.replace(/\/+$/, "") + "/api/public/resume/" + encodeURIComponent(resume.token)
   : "";
-const resumePreview = resumeBase ? resumeBase + "/pdf" : "";
+const resumePreview = resumeConfigured
+  ? resume.appUrl.replace(/\/+$/, "") + "/p/" + encodeURIComponent(resume.token) + "/pdf"
+  : "";
 const resumeDownload = resumeBase ? resumeBase + "/pdf?download=1" : "";
 
 const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label));
