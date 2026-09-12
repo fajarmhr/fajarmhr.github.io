@@ -1,8 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 //  PORTFOLIO CONTENT — single source of truth.
 //  Edit this file to update your site, then commit & push.
-//  (Tip: the Admin.dc.html editor from the design phase exports
-//   the same shape — paste its values here.)
+//  Facts, dates and figures mirror the published CV Builder résumé.
 // ─────────────────────────────────────────────────────────────
 
 export interface Link { label: string; href: string; handle: string; }
@@ -30,9 +29,9 @@ export const profile = {
   name: "Mohamad Fajar Mahardika",
   role: "Cloud Infrastructure Engineer",
   tagline:
-    "I run the OpenStack core platforms behind Indonesia's largest mobile networks: millions of subscribers, hundreds of gigabits of live traffic.",
-  location: "South Jakarta, Indonesia. Open to remote or relocation",
-  available: "Open to Cloud, DevOps, Platform and SRE roles",
+    "I run the large-scale OpenStack private clouds that carry real production traffic for Indonesia's 4G and 5G core networks — millions of subscribers, hundreds of gigabits.",
+  location: "South Jakarta, Indonesia",
+  available: "Open to remote & international opportunities",
   // Contact details come from the ENVIRONMENT so they're never committed to the public repo.
   email: import.meta.env.CONTACT_EMAIL ?? "",
   phone: import.meta.env.CONTACT_PHONE ?? "",
@@ -54,8 +53,8 @@ export const resume = {
 };
 
 export const about: string[] = [
-  "I'm a cloud infrastructure engineer at Huawei Indonesia, operating the OpenStack platforms (Huawei FusionSphere) that carry the 4G and 5G core networks for Indonesia's top three operators. This is work where reliability isn't optional: millions of subscribers and hundreds of gigabits of production traffic depend on it staying up.",
-  "I'm happiest removing operational toil — Python health-checks, YAML-defined Infrastructure as Code, Linux administration, and the lifecycle management of virtualized (VNF) and containerized (CNF) network functions. I'm now looking for cloud platform, DevOps and SRE roles where that operational rigor is the whole job.",
+  "I'm a cloud infrastructure engineer with three years of hands-on experience running large-scale OpenStack private clouds that carry real production traffic. At Huawei Indonesia I operate the platforms behind the 4G and 5G core networks of Indonesia's major operators — Telkomsel, Indosat Ooredoo Hutchison and XL Axiata — serving millions of subscribers and handling hundreds of Gbps.",
+  "Day to day I focus on capacity expansion, Linux systems, Python automation, and keeping services stable through migrations and growth: YAML deployment templates that keep production sites consistent, health-check scripting that removes operational toil, and lifecycle management of virtualized (VNF) and cloud-native (CNF) network functions. I'm looking for cloud engineering or platform roles where reliability and automation matter.",
 ];
 
 // Each project leads with its IMPACT metrics, then grouped technology, then an
@@ -66,110 +65,110 @@ export const projects: Project[] = [
     year: "Jan 2026 – Present",
     role: "PS Core Network Engineer",
     blurb:
-      "Returned to Indosat's packet core to scale the live 5G platform — deploying and integrating 5G UPF VNFs for South Sumatra and leading 5G SMF expansion for the Lampung region.",
+      "Back on Indosat's packet core to scale the live 5G platform — deploying 5G Core workloads in South Sumatra past 350 Gbps and rolling out IaaS bare-metal container user-plane capacity across Indonesia.",
     metrics: [
-      { value: "350+ Gbps", label: "5G UPF capacity" },
-      { value: "2M+", label: "subscribers served" },
-      { value: "UPF + SMF", label: "5G core scope" },
+      { value: "350+ Gbps", label: "5G platform capacity" },
+      { value: "Nationwide", label: "bare-metal user plane" },
+      { value: "4G + 5G", label: "production operations" },
     ],
     tech: {
-      core: ["5G Core", "UPF", "SMF", "VNF"],
-      infra: ["OpenStack", "FusionSphere"],
+      core: ["5G Core", "UPF", "VNF / CNF"],
+      infra: ["OpenStack", "Bare-Metal Containers", "Linux"],
       automation: ["Python", "YAML"],
     },
     details: {
       overview:
-        "An ongoing 5G packet-core scaling program at Indosat Ooredoo Hutchison, focused on user-plane and session-management capacity across Sumatra.",
+        "An ongoing 5G packet-core scaling program at Indosat Ooredoo Hutchison, covering user-plane capacity growth and day-to-day operations of live 4G and 5G core environments.",
       challenge:
-        "Adding 5G UPF and SMF capacity to a live national core without disrupting the subscribers and traffic already running on it.",
+        "Adding 5G Core capacity and a new bare-metal container user plane to a national network that is already carrying production subscribers and traffic.",
       implementation:
-        "Deployed and integrated 5G UPF VNFs for South Sumatra and planned and executed 5G SMF expansion for the Lampung region.",
+        "Deployed 5G Core workloads in South Sumatra, deployed and configured IaaS bare-metal containers for the user plane across Indonesia, and supported expansion plus daily operations for production 4G and 5G Core environments.",
       outcome:
-        "Raised 5G user-plane capacity to 350+ Gbps in South Sumatra and extended SMF headroom for 2M+ subscribers in Lampung.",
+        "Platform capacity increased beyond 350 Gbps, with user-plane capacity now running on bare-metal containers nationwide.",
     },
     href: "#",
   },
   {
-    title: "Telkomsel 5G Core Migration",
-    year: "Aug 2025 – Jan 2026",
+    title: "Telkomsel Core Site Migration",
+    year: "Aug 2025 – Dec 2025",
     role: "PS Core Network Engineer",
     blurb:
-      "Migrated international roaming traffic from Surabaya to Jakarta core sites with minimal service disruption, and commissioned the by.U APN with DPI across Telkomsel's nationwide SMF and UPF platforms.",
+      "Migrated production traffic between geographically separate core sites with no service interruption — relocating international roaming from Surabaya to Jakarta — and commissioned the by.U APN with DPI across the distributed 5G Core.",
     metrics: [
-      { value: "Nationwide", label: "5G core scope" },
-      { value: "SMF / UPF", label: "platforms cut over" },
-      { value: "Minimal", label: "service disruption" },
+      { value: "Zero", label: "service interruption" },
+      { value: "SMF / UPF", label: "platforms integrated" },
+      { value: "Distributed", label: "5G Core scope" },
     ],
     tech: {
       core: ["5G Core", "SMF", "UPF", "DPI"],
-      infra: ["FusionSphere", "Linux"],
+      infra: ["Linux", "VNF"],
       automation: ["Python"],
     },
     details: {
       overview:
-        "Consolidation of Telkomsel's packet-switched core: relocating international roaming onto Jakarta core sites while extending nationwide 5G SMF/UPF coverage.",
+        "Consolidation of Telkomsel's packet-switched core: relocating production traffic onto Jakarta core sites while delivering service integration across the distributed 5G Core platforms.",
       challenge:
-        "International roaming is unforgiving of downtime: the cutover from Surabaya to Jakarta had to preserve live sessions and signalling for partner networks.",
+        "International roaming is unforgiving of downtime — moving it between geographically separate core sites had to preserve live sessions and signalling for partner networks throughout.",
       implementation:
-        "Led the relocation of roaming traffic across core sites and commissioned the by.U APN with deep packet inspection across the nationwide SMF and UPF platforms.",
+        "Led the relocation of roaming traffic across core sites, then delivered service integration and configuration changes — including commissioning the by.U APN with deep packet inspection — across the distributed 5G Core.",
       outcome:
-        "Roaming relocated with minimal service disruption; by.U gained APN-level policy control and DPI visibility across the national 5G core.",
+        "Traffic migrated between sites with no service interruption, and by.U gained APN-level policy control and DPI visibility across the core.",
     },
     href: "#",
   },
   {
-    title: "Indosat Ooredoo Hutchison — 4G & Private LTE",
+    title: "Indosat Ooredoo Hutchison — 4G Growth & Private LTE",
     year: "Apr 2024 – Jul 2025",
     role: "PS Core Network Engineer",
     blurb:
-      "Delivered multi-region 4G CUPS capacity expansions across Sumatra and Kalimantan, and stood up a dedicated private LTE core (MME, SPGW-C/U, HSS) for enterprise client PT RAPP.",
+      "Delivered multi-region 4G Core capacity expansions across Sumatra and Kalimantan, grew 5G Core capacity in Lampung, and built and handed over a dedicated private LTE core for enterprise client PT RAPP.",
     metrics: [
-      { value: "4.5M+", label: "subscribers" },
-      { value: "600+ Gbps", label: "4G capacity added" },
+      { value: "8.5M+", label: "subscribers supported" },
+      { value: "600+ Gbps", label: "capacity added" },
       { value: "Private LTE", label: "enterprise core" },
     ],
     tech: {
-      core: ["4G CUPS", "MME", "SPGW-C/U", "HSS"],
-      infra: ["OpenStack", "FusionSphere", "VNF"],
+      core: ["4G Core", "5G Core", "MME", "SPGW-C/U", "HSS"],
+      infra: ["OpenStack", "Linux", "VNF"],
       automation: ["Python", "YAML"],
     },
     details: {
       overview:
-        "A multi-region 4G packet-core capacity program across Indosat's network, plus a dedicated private LTE core for an enterprise customer.",
+        "A multi-region packet-core capacity program across Indosat's network, plus a dedicated private LTE core delivered for an enterprise customer.",
       challenge:
-        "Expanding live 4G CUPS capacity across North Sumatra, West Kalimantan, and Central and South Sumatra without impacting the millions of subscribers already on the platform — while standing up an isolated enterprise core in parallel.",
+        "Expanding live 4G and 5G core capacity across North Sumatra, West Kalimantan, Central/South Sumatra and Lampung without impacting the millions of subscribers already on the platform — while standing up an isolated enterprise core in parallel.",
       implementation:
-        "Planned and executed 4G CUPS expansions across North Sumatra and West Kalimantan (4.5M+ subscribers, 360+ Gbps) and Central and South Sumatra (4M+ subscribers, 260+ Gbps), and installed and commissioned a private LTE core (MME, SPGW-C, SPGW-U, HSS) for PT RAPP.",
+        "Expanded 4G Core capacity to support 4.5M+ subscribers and 360+ Gbps across North Sumatra and West Kalimantan, grew virtualized infrastructure in Central/South Sumatra (4M+ subscribers, 260+ Gbps) and 5G Core capacity in Lampung (2M+ subscribers), and built and handed over a private LTE Core for PT RAPP including integration, validation and production readiness.",
       outcome:
-        "Added 600+ Gbps of 4G headroom across two regions serving 4.5M+ subscribers, and delivered a production private LTE core for enterprise connectivity.",
+        "600+ Gbps of additional headroom across four regions serving 8.5M+ subscribers, and a production-ready private LTE core delivered to the enterprise customer.",
     },
     href: "#",
   },
   {
-    title: "XL Axiata Jakarta Packet Core",
+    title: "XL Axiata Packet Core Cutover",
     year: "Jun 2023 – Mar 2024",
     role: "PS Core Network Engineer",
     blurb:
-      "Installed, commissioned and cut over the 4G CUPS packet core for the Jakarta region, and migrated MME services for North Sumatra — platforms collectively serving 10M+ subscribers.",
+      "Took a virtualized 4G Core platform from installation through commissioning and live cutover, and handled commissioning and migration for production services in North Sumatra. The platform now serves 10M+ subscribers and carries 200+ Gbps.",
     metrics: [
-      { value: "10M+", label: "subscribers" },
-      { value: "200+ Gbps", label: "capacity" },
-      { value: "2", label: "regions migrated" },
+      { value: "10M+", label: "subscribers served" },
+      { value: "200+ Gbps", label: "traffic carried" },
+      { value: "Install → cutover", label: "full lifecycle" },
     ],
     tech: {
-      core: ["4G CUPS", "MME", "Packet Core"],
-      infra: ["FusionSphere", "Linux"],
+      core: ["4G Core", "MME", "Packet Core"],
+      infra: ["OpenStack", "Linux", "VNF"],
       automation: ["Python", "YAML"],
     },
     details: {
       overview:
-        "A greenfield 4G CUPS packet core for the Jakarta region, paired with an MME service migration for North Sumatra.",
+        "A virtualized 4G packet core taken end-to-end from installation to live production, paired with a service migration for North Sumatra.",
       challenge:
-        "Bringing a new packet core into service and migrating MME for regions collectively serving 10M+ subscribers demanded careful commissioning and cutover sequencing.",
+        "Bringing a new packet core into service and migrating live production services demanded careful commissioning and cutover sequencing on a platform destined to carry 10M+ subscribers.",
       implementation:
-        "Installed, commissioned and cut over the Jakarta 4G CUPS packet core, then migrated North Sumatra MME services onto the platform.",
+        "Installed, commissioned and cut over the virtualized 4G Core platform, then handled commissioning and migration for production services in North Sumatra.",
       outcome:
-        "Two regions serving 10M+ subscribers carried on the new core, with 200+ Gbps of capacity running in production.",
+        "The platform runs in production today, serving 10M+ subscribers and carrying 200+ Gbps.",
     },
     href: "#",
   },
@@ -202,28 +201,31 @@ export const projects: Project[] = [
 ];
 
 export const services: Service[] = [
-  { title: "Cloud Platform Operations", desc: "Running OpenStack and virtualized infrastructure that stays available under real production load." },
-  { title: "Automation & IaC", desc: "Replacing operational toil with Python and YAML-defined, repeatable infrastructure." },
-  { title: "Reliability at Scale", desc: "Capacity planning, lifecycle management and zero-disruption migrations for systems serving millions." },
+  { title: "Cloud Platform Operations", desc: "Running and expanding OpenStack private clouds that stay available under real production load." },
+  { title: "Automation & IaC", desc: "Python operational scripting and YAML deployment templates that keep production sites consistent and repeatable." },
+  { title: "Reliability at Scale", desc: "Capacity planning, high availability and live migrations for platforms serving millions of subscribers." },
 ];
 
 export const skills: SkillGroup[] = [
-  { group: "Cloud & Virtualization", items: ["OpenStack", "Huawei FusionSphere", "VNF / CNF", "KVM"] },
-  { group: "Automation & IaC", items: ["Python", "YAML", "Bash", "Infrastructure as Code"] },
-  { group: "Platform & Linux", items: ["Linux Administration", "Containers", "Compute & Storage", "Networking"] },
-  { group: "Telecom Core", items: ["4G CUPS", "5G Core (AMF/SMF/UPF)", "MME", "Packet Core"] },
+  { group: "Cloud & Virtualization", items: ["OpenStack (Advanced)", "Huawei FusionSphere", "IaaS", "Bare-metal Containers", "VNF / CNF", "Private Cloud"] },
+  { group: "Automation", items: ["Python", "YAML Templates", "Infrastructure as Code", "Operational Scripting"] },
+  { group: "Systems", items: ["Linux (Advanced)", "Performance Tuning", "Troubleshooting", "Production Operations"] },
+  { group: "Infrastructure", items: ["Capacity Planning", "Live Migrations", "High Availability", "Virtual Networking", "4G / 5G Core Environments"] },
+  { group: "Tools", items: ["Git", "Microsoft Office", "Google Workspace"] },
 ];
 
 export const experience: ExperienceItem[] = [
   {
     company: "Huawei Indonesia",
-    role: "Intermediate Cloud Core Engineer",
+    role: "Cloud Infrastructure Engineer (OpenStack)",
     period: "Jun 2023 – Present",
     points: [
-      "Administer large-scale OpenStack cloud infrastructure (Huawei FusionSphere) carrying mission-critical 4G/5G telecom core services at national scale.",
-      "Build and maintain Python automation for infrastructure health checks, monitoring validation and operational reporting across cloud, server and storage.",
-      "Lead deployment, commissioning, upgrade and capacity expansion of core network workloads across virtual machines and containerized (CNF) platforms, alongside multi-vendor engineering teams.",
-      "Manage compute, storage and networking resources and the lifecycle of virtualized (VNF) and cloud-native 5G core functions, keeping nationwide services available and scalable.",
+      "Run and expand OpenStack private cloud platforms used by major Indonesian operators for 4G and 5G core networks (Telkomsel, IOH, and XL Axiata).",
+      "Plan and deliver capacity growth across compute, storage, and networking so platforms can absorb higher traffic without downtime.",
+      "Run and maintain Python scripts for infrastructure health checks, operational reporting, and daily operational tasks.",
+      "Maintain YAML deployment templates so new capacity and configuration changes stay consistent across production sites.",
+      "Manage the underlying Linux systems — troubleshooting, performance tuning, and day-to-day operational support.",
+      "Operate virtualized and cloud-native network functions (VNF/CNF) running on these OpenStack clusters.",
     ],
   },
   {
@@ -238,28 +240,33 @@ export const experience: ExperienceItem[] = [
 ];
 
 export const education: EducationItem[] = [
-  { school: "Telkom University", degree: "B.Tech, Telecommunication Engineering", detail: "GPA 3.32", period: "Jan 2023" },
+  {
+    school: "Telkom University",
+    degree: "Bachelor of Technology, Telecommunication Engineering",
+    detail: "GPA 3.32 / 4.00",
+    period: "Aug 2017 – Dec 2022",
+  },
 ];
 
 export const languages: string[] = ["Indonesian (Native)", "English (Advanced)"];
 
 export const certifications: Certification[] = [
-  { name: "HCIA – Cloud Computing", issuer: "Huawei", date: "Sep 2020", credentialId: "01010080280805089633746" },
-  { name: "HCIA – Routing & Switching", issuer: "Huawei", date: "Oct 2020", credentialId: "01010010139780805481667025" },
-  { name: "HCIA – Security", issuer: "Huawei", date: "Dec 2020", credentialId: "01010030139780806289767568" },
+  { name: "HCIA Cloud Computing", issuer: "Huawei", date: "Sep 2020", credentialId: "01010080280805089633746" },
+  { name: "HCIA Routing & Switching", issuer: "Huawei", date: "Oct 2020", credentialId: "01010010139780805481667025" },
+  { name: "HCIA Security", issuer: "Huawei", date: "Dec 2020", credentialId: "01010030139780806289767568" },
 ];
 
 export const awards: Award[] = [
   {
     title: "Huawei ICT Cloud Competition — 2nd Place (National)",
-    issuer: "Huawei Indonesia",
+    issuer: "Huawei",
     date: "Dec 2020",
-    detail: "National Cloud Computing 2020 ICT Competition",
+    detail: "National level, Cloud Computing track",
   },
   {
     title: "Huawei ICT Cloud Selection — 3rd Place (Campus)",
-    issuer: "Huawei Indonesia",
+    issuer: "Huawei",
     date: "Dec 2020",
-    detail: "Campus-level Cloud Computing 2020 ICT Competition",
+    detail: "Campus level, Cloud Computing track",
   },
 ];

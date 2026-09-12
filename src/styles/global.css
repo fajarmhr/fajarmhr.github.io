@@ -57,7 +57,7 @@ a { text-decoration: none; color: inherit; }
 /* section heads */
 .sec { margin-bottom: 118px; }
 .sec-head { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 2.8vw, 30px); letter-spacing: -0.01em; color: var(--ink); margin-bottom: 34px; border-top: 1px solid var(--line-strong); padding-top: 20px; }
-.sec-head h2, .sec-head span { font: inherit; color: inherit; margin: 0; }p: 18px; display: flex; justify-content: space-between; }
+.sec-head h2, .sec-head span { font: inherit; color: inherit; margin: 0; }
 .sec-head .n { color: var(--faint); }
 
 /* work */
