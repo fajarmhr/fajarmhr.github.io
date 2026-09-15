@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import SelectedWork from "../components/SelectedWork.astro";
 import {
-  profile, resume, about, services, skills, experience, education, languages,
+  profile, resume, facts, about, skills, experience, education, languages,
   certifications, awards,
 } from "../data/profile";
 
@@ -19,6 +19,25 @@ const resumePreview = resumeConfigured
 const resumeDownload = resumeBase ? resumeBase + "/pdf?download=1" : "";
 
 const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label));
+
+// Absolute URLs for link previews (LinkedIn, Slack, X) and search engines.
+const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
+const pageTitle = `${profile.name} · ${profile.headline}`;
+const ogImage = new URL("og.png", siteUrl).href;
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.headline,
+  url: siteUrl,
+  image: new URL(profile.photo.replace(/^\//, ""), siteUrl).href,
+  address: { "@type": "PostalAddress", addressLocality: "Jakarta", addressCountry: "ID" },
+  worksFor: { "@type": "Organization", name: experience[0].company },
+  alumniOf: { "@type": "CollegeOrUniversity", name: education[0].school },
+  knowsLanguage: ["Indonesian", "English"],
+  knowsAbout: skills.flatMap((s) => s.items),
+  sameAs: profile.links.map((l) => l.href),
+};
 ---
 
 <!doctype html>
@@ -26,11 +45,21 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{profile.name} · {profile.role}</title>
-    <meta name="description" content={profile.tagline} />
-    <meta property="og:title" content={`${profile.name} · ${profile.role}`} />
-    <meta property="og:description" content={profile.tagline} />
-    <meta property="og:type" content="website" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={profile.metaDescription} />
+    <link rel="canonical" href={siteUrl} />
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={profile.metaDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={pageTitle} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Only hide content for the scroll reveal when JS is actually running. -->
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -52,7 +81,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
             <span class="s">{profile.location}</span>
           </div>
           <div class="actions">
-            <button id="open-resume" class="pill solid">View résumé <span class="tag">PDF</span></button>
+            <button class="pill solid" data-open-resume>View résumé <span class="tag">PDF</span></button>
             {visibleLinks.map((l) => (
               <a class="pill" href={l.href} target="_blank" rel="noopener">
                 {l.label} <span class="tag">{l.handle}</span>
@@ -61,14 +90,21 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
           </div>
         </div>
         {profile.photo ? (
-          <div class="photo" style={`background-image:url(${profile.photo})`}></div>
+          <div class="photo" role="img" aria-label={profile.name} style={`background-image:url(${profile.photo})`}></div>
         ) : (
           <div class="photo"><div class="photo-label">PORTRAIT<br />set profile.photo</div></div>
         )}
       </header>
 
-      <!-- ABOUT + SKILLS (moved directly under the hero) -->
-      <section class="two-col tb-sec reveal">
+      <!-- AT A GLANCE: the numbers a recruiter should leave with -->
+      <dl class="glance reveal">
+        {facts.map((f) => (
+          <div class="fact"><dt>{f.label}</dt><dd>{f.value}</dd></div>
+        ))}
+      </dl>
+
+      <!-- ABOUT + SKILLS -->
+      <section class="two-col reveal">
         <div>
           <div class="col-label">About</div>
           {about.map((para) => <p class="about-p">{para}</p>)}
@@ -84,10 +120,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
         </div>
       </section>
 
-      <!-- SELECTED WORK -->
-      <SelectedWork />
-
-      <!-- EXPERIENCE -->
+      <!-- EXPERIENCE (ahead of the project detail, so the career timeline is found fast) -->
       <section class="sec reveal">
         <div class="sec-head"><span>Experience</span></div>
         {experience.map((e) => (
@@ -101,6 +134,9 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
           </div>
         ))}
       </section>
+
+      <!-- SELECTED WORK -->
+      <SelectedWork />
 
       <!-- EDUCATION + LANGUAGES -->
       <section class="two-col reveal">
@@ -150,20 +186,19 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
         </div>
       </section>
 
-      <!-- WHAT I BRING -->
-      <section class="sec reveal">
-        <div class="sec-head"><span>What I bring</span></div>
-        <div class="focus-grid">
-          {services.map((sv) => (
-            <div class="focus"><h4>{sv.title}</h4><p>{sv.desc}</p></div>
-          ))}
-        </div>
-      </section>
-
       <!-- CONTACT -->
       <section class="contact reveal">
         <div class="col-label">Get in touch</div>
-        <a class="contact-mail" href={`mailto:${profile.email}`}>{profile.email}</a>
+        <p class="contact-note">Hiring for a cloud infrastructure or platform role? I'd like to hear about it.</p>
+        {profile.email && <a class="contact-mail" href={`mailto:${profile.email}`}>{profile.email}</a>}
+        <div class="contact-links">
+          <button class="pill solid" data-open-resume>View résumé <span class="tag">PDF</span></button>
+          {visibleLinks.map((l) => (
+            <a class="pill" href={l.href} target="_blank" rel="noopener">
+              {l.label} <span class="tag">{l.handle}</span>
+            </a>
+          ))}
+        </div>
       </section>
     </main>
 
@@ -226,7 +261,6 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
       // ── résumé modal ──
       const modal = document.getElementById("resume-modal");
       const frame = document.getElementById("resume-frame") as HTMLIFrameElement | null;
-      const openBtn = document.getElementById("open-resume");
       const preview = modal?.dataset.preview || "";
       const open = () => {
         if (!modal) return;
@@ -239,7 +273,7 @@ const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label
         modal.classList.remove("open");
         document.body.style.overflow = "";
       };
-      openBtn?.addEventListener("click", open);
+      document.querySelectorAll("[data-open-resume]").forEach((b) => b.addEventListener("click", open));
       modal?.addEventListener("click", (e) => { if (e.target === modal) close(); });
       document.querySelectorAll("[data-close-resume]").forEach((b) => b.addEventListener("click", close));
       window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });

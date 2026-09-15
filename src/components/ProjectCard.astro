@@ -1,9 +1,8 @@
 ---
 // A single Selected-Work entry. Hierarchy is impact-first:
-//   metrics → project → role → summary → grouped tech → optional breakdown.
+//   title → who/when → metrics → summary → stack → optional breakdown.
 // The expandable breakdown uses a native <details> element — zero JavaScript,
 // accessible by default, and works without hydration.
-import TechnologyGroup from "./TechnologyGroup.astro";
 import type { Project } from "../data/profile";
 
 interface Props {
@@ -12,12 +11,6 @@ interface Props {
 }
 const { project, index } = Astro.props;
 const idx = String(index + 1).padStart(2, "0");
-
-const groups = [
-  { label: "Core Network", items: project.tech.core ?? [] },
-  { label: "Infrastructure", items: project.tech.infra ?? [] },
-  { label: "Automation", items: project.tech.automation ?? [] },
-];
 const d = project.details;
 ---
 
@@ -25,7 +18,13 @@ const d = project.details;
   <div class="work-top">
     <span class="work-idx">{idx}</span>
     <h3 class="work-title">{project.title}</h3>
-    <span class="work-when">{project.role} · {project.year}</span>
+  </div>
+  <div class="work-meta">
+    <span class="org">{project.org}</span>
+    <span class="sep">·</span>
+    <span>{project.context}</span>
+    <span class="sep">·</span>
+    <span>{project.year}</span>
   </div>
 
   <!-- METRIC LEAD — the visual focus -->
@@ -40,10 +39,9 @@ const d = project.details;
 
   <p class="work-blurb">{project.blurb}</p>
 
-  <!-- grouped technology -->
-  <div class="tech-groups">
-    {groups.map((g) => <TechnologyGroup label={g.label} items={g.items} />)}
-  </div>
+  <ul class="tech-chips" aria-label="Stack">
+    {project.stack.map((t) => <li class="tech-chip">{t}</li>)}
+  </ul>
 
   <!-- expandable Challenge → Action → Result breakdown -->
   {d && (
