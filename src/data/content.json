@@ -1,0 +1,433 @@
+{
+  "profile": {
+    "name": "Mohamad Fajar Mahardika",
+    "role": "Cloud Infrastructure Engineer",
+    "headline": "Cloud Infrastructure & Platform Engineer",
+    "tagline": "I deploy and run the OpenStack private clouds behind Indonesia's biggest mobile networks — hundreds of gigabits of live subscriber traffic, with very little room for downtime.",
+    "metaDescription": "Cloud infrastructure engineer running production OpenStack and Linux at telecom scale for Indonesia's largest mobile operators. Python automation, 4G/5G core, capacity planning and live migrations. Open to relocation or remote.",
+    "location": "Jakarta, Indonesia (GMT+7)",
+    "available": "Open to international roles — remote or relocation",
+    "photo": "/me.jpg",
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/fajarmhr",
+        "handle": "fajarmhr"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/in/massffajar",
+        "handle": "massffajar"
+      },
+      {
+        "label": "Google Skills",
+        "href": "https://www.skills.google/public_profiles/f04e8dfb-8627-4419-83cd-b9ab303925b6/",
+        "handle": "badges"
+      }
+    ]
+  },
+  "facts": [
+    {
+      "value": "3+ yrs",
+      "label": "In production telecom cloud"
+    },
+    {
+      "value": "10M+",
+      "label": "Subscribers on one platform"
+    },
+    {
+      "value": "360+ Gbps",
+      "label": "Largest regional expansion"
+    },
+    {
+      "value": "3",
+      "label": "National operators supported"
+    }
+  ],
+  "about": [
+    "I'm an Intermediate Cloud Core Network Engineer at Huawei Indonesia. Since June 2023 I've worked on the OpenStack private clouds that XL Axiata, Indosat Ooredoo Hutchison and Telkomsel run their 4G and 5G core networks on. That means real production load: millions of subscribers per platform, hundreds of gigabits a second, and very little room for downtime.",
+    "Most of my work is capacity and change. I supervise server installation at edge and core sites, deploy virtualized and bare-metal containerized network functions from low-level designs, bring up interfaces, routes and BGP/BFD sessions, move live traffic between sites, and run nationwide OpenStack and VNF lifecycle upgrades inside planned maintenance windows. Underneath all of it I keep the Linux hosts healthy and write Python for health checks, reporting and routine operations.",
+    "Outside production I've built the things telecom work doesn't cover: Nginx load balancing on Docker Compose validated with Grafana k6, Terraform and Kubernetes through Google Cloud labs, and a couple of full-stack apps I host and operate myself. I'm looking for a cloud infrastructure or platform role — relocating to the EU, US, Australia or Singapore, or joining a team remotely."
+  ],
+  "projects": [
+    {
+      "title": "Nationwide bare-metal 5G user plane for Indosat",
+      "org": "Indosat Ooredoo Hutchison",
+      "context": "Huawei Indonesia",
+      "year": "Jan 2026 – Present",
+      "blurb": "I supervise server installation across Indosat's edge and core sites, deploy bare-metal containerized UPF workloads from low-level designs, and run nationwide upgrades of the OpenStack and VNF lifecycle platforms sitting under the live 4G and 5G cores.",
+      "metrics": [
+        {
+          "value": "6 cities",
+          "label": "bare-metal UPF deployed"
+        },
+        {
+          "value": "7 sites",
+          "label": "server installs supervised"
+        },
+        {
+          "value": "Nationwide",
+          "label": "OpenStack & VNFLCM upgrades"
+        }
+      ],
+      "stack": [
+        "OpenStack",
+        "Bare-metal Containers",
+        "Linux",
+        "CNF / UPF",
+        "BGP / BFD",
+        "YAML / CFG"
+      ],
+      "details": {
+        "overview": "Current assignment: hardware and platform work across Indosat's national 4G and 5G core, from rack-level installation up to the orchestration layer.",
+        "challenge": "Every site is already carrying live subscriber traffic, so new capacity, a new bare-metal container user plane and platform-wide upgrades all have to land inside planned windows with a working rollback.",
+        "implementation": "Supervised server installation against approved designs in Surabaya, Lampung, Pekanbaru, Makassar, Denpasar, Balikpapan and Banjarmasin, and coordinated IP reachability and remote access with the data communication team. Deployed bare-metal containerized UPF in Makassar, Palembang, Medan, Banjarmasin, Semarang and Pontianak — reading the low-level designs, adapting YAML and CFG templates, configuring interfaces and routes, bringing BGP and BFD sessions into service and integrating with the surrounding SMF and AMF. Ran nationwide upgrades of OpenStack, the VNF lifecycle-management platform and the monitoring stack using Huawei R&D's Python tooling, and expanded compute hosts, VMs and container workloads as capacity demanded.",
+        "outcome": "Bare-metal container user plane is in service across six regions, each deployment passed reliability testing and customer UAT with Indosat, and the national platform upgrades completed inside their maintenance windows."
+      }
+    },
+    {
+      "title": "Redistributing by.U's national traffic to the edge",
+      "org": "Telkomsel",
+      "context": "Huawei Indonesia",
+      "year": "Aug 2025 – Dec 2025",
+      "blurb": "I moved by.U's traffic off two central sites onto eight regional edge sites, and migrated Telkomsel's international roaming from Surabaya to Jakarta — planning the capacity, configuring it, testing it, cutting over, then watching it afterwards.",
+      "metrics": [
+        {
+          "value": "8 regions",
+          "label": "edge sites brought into service"
+        },
+        {
+          "value": "No interruption",
+          "label": "across the planned cutovers"
+        },
+        {
+          "value": "End to end",
+          "label": "plan, test, cut over, monitor"
+        }
+      ],
+      "stack": [
+        "Linux",
+        "VNF",
+        "5G Core (SMF / UPF)",
+        "APN / DPI",
+        "Capacity Planning"
+      ],
+      "details": {
+        "overview": "A redistribution of Telkomsel's packet core: pulling by.U traffic out of Jakarta and Surabaya into regional edge sites, plus consolidating international roaming onto Jakarta.",
+        "challenge": "Roaming and subscriber sessions can't drop mid-flight, and every edge site needed its own subscriber and throughput budget before any traffic could be pointed at it.",
+        "implementation": "Ran the full migration workflow for by.U into East Java, Central Java, West Java, Jabodetabek, Bali, Kupang, Banjarmasin and Pontianak: APN configuration, subscriber capacity calculation, throughput planning, test and validation, cutover, then post-migration monitoring. Configured by.U's APN and DPI across the nationwide SMF and UPF elements, and planned and executed the move of international roaming traffic from Surabaya to Jakarta while holding service continuity.",
+        "outcome": "by.U now serves subscribers from eight regional edge sites instead of two central ones, with APN-level policy and traffic visibility across the core, and the planned cutovers completed without service interruption."
+      }
+    },
+    {
+      "title": "Growing Indosat's virtualized core across five regions",
+      "org": "Indosat Ooredoo Hutchison",
+      "context": "Huawei Indonesia",
+      "year": "Apr 2024 – Jul 2025",
+      "blurb": "I expanded Indosat's 4G and 5G core capacity in North Sumatra, West Kalimantan, Central and South Sumatra and Lampung, and helped build a private LTE core for the pulp-and-paper operator PT RAPP from installation through to production handover.",
+      "metrics": [
+        {
+          "value": "360+ Gbps",
+          "label": "N. Sumatra & W. Kalimantan"
+        },
+        {
+          "value": "350+ Gbps",
+          "label": "S. Sumatra 5G user plane"
+        },
+        {
+          "value": "Private LTE",
+          "label": "built for PT RAPP"
+        }
+      ],
+      "stack": [
+        "OpenStack",
+        "Linux",
+        "VNF",
+        "4G / 5G Core",
+        "CUPS",
+        "Private LTE"
+      ],
+      "details": {
+        "overview": "Fifteen months of capacity work on Indosat's virtualized core, rotating between regions, plus a dedicated enterprise LTE core.",
+        "challenge": "Add capacity to platforms already serving millions of subscribers without disrupting them, while standing up an isolated enterprise core in parallel.",
+        "implementation": "Supported 4G CUPS capacity expansion in North Sumatra and West Kalimantan (4.5M+ active subscribers, 360+ Gbps for that regional scope) and across Central and South Sumatra (4M+ subscribers, 260+ Gbps), 5G SMF expansion in Lampung (around 2M+ subscribers) and a South Sumatra 5G UPF expansion carrying 350+ Gbps. Took part in the deployment, installation and initial commissioning of a private LTE core for PT RAPP in Riau — MME, SPGW-C, SPGW-U and HSS.",
+        "outcome": "Five regional scopes run on expanded capacity, and PT RAPP took over a production-ready private LTE core. Every figure here is per-region project scope, not an Indosat-wide total."
+      }
+    },
+    {
+      "title": "Commissioning XL Axiata's virtualized 4G core",
+      "org": "XL Axiata",
+      "context": "Huawei Indonesia",
+      "year": "Jun 2023 – Mar 2024",
+      "blurb": "My first assignment at Huawei: hardware and software installation, commissioning and live cutover of a virtualized 4G core in the Jakarta region, then MME commissioning and production migration in North Sumatra.",
+      "metrics": [
+        {
+          "value": "10M+",
+          "label": "subscribers on the platform"
+        },
+        {
+          "value": "200+ Gbps",
+          "label": "traffic carried"
+        },
+        {
+          "value": "Install → live",
+          "label": "full commissioning cycle"
+        }
+      ],
+      "stack": [
+        "OpenStack",
+        "Linux",
+        "VNF",
+        "4G Core / CUPS",
+        "MME"
+      ],
+      "details": {
+        "overview": "A virtualized 4G core and CUPS deployment for XL Axiata, taken from installation through commissioning to production, with a service migration in North Sumatra.",
+        "challenge": "Bringing up a new core and moving live services onto it needs careful commissioning and cutover planning, on a platform sized for 10M+ subscribers and 200+ Gbps.",
+        "implementation": "Supported hardware and software installation, Linux and OpenStack infrastructure setup, configuration and troubleshooting, commissioning and live production cutover in the Jakarta region, then MME commissioning and production migration in North Sumatra. Covered regional operational support across the team's Sumatra and Java scope.",
+        "outcome": "The Jakarta platform is in production today, serving 10M+ subscribers and carrying 200+ Gbps."
+      }
+    },
+    {
+      "title": "Tracing 5G registration on an open-source core",
+      "org": "Telkom University",
+      "context": "Basic & Applied Research",
+      "year": "Mar 2023",
+      "blurb": "After my thesis I stood up an open-source 5G standalone core and followed a subscriber's registration step by step through the AMF, SMF and UPF, using packet captures instead of vendor test equipment.",
+      "metrics": [
+        {
+          "value": "5G SA",
+          "label": "registration traced end to end"
+        },
+        {
+          "value": "Open-source",
+          "label": "core, no vendor tooling"
+        },
+        {
+          "value": "AMF / SMF / UPF",
+          "label": "functions instrumented"
+        }
+      ],
+      "stack": [
+        "Open5GS",
+        "Linux",
+        "Containers",
+        "Python",
+        "5G Core"
+      ],
+      "details": {
+        "overview": "A hands-on study of how a standalone 5G core actually works, built on open-source network functions rather than vendor tooling.",
+        "challenge": "Validate the 5G registration procedure end to end across the AMF, SMF and UPF without commercial test equipment.",
+        "implementation": "Built a 5G standalone core from open-source network functions and traced the subscriber registration flow across each one, correlating the signalling at every hop.",
+        "outcome": "A complete, reproducible trace of the registration procedure. A journal submission was planned off the back of it; it has not been published."
+      }
+    },
+    {
+      "title": "Serving a disaster-detection model on Google Cloud",
+      "org": "Bangkit Academy",
+      "context": "Cloud Computing path, led by Google",
+      "year": "Feb 2021 – Jul 2021",
+      "blurb": "For the team capstone I provisioned and ran the GCP Compute Engine instances hosting our FastAPI service, so the image-based disaster-detection model was reachable as a working API.",
+      "metrics": [
+        {
+          "value": "GCP",
+          "label": "Compute Engine hosting"
+        },
+        {
+          "value": "FastAPI",
+          "label": "model served as an API"
+        },
+        {
+          "value": "Capstone",
+          "label": "cross-functional team"
+        }
+      ],
+      "stack": [
+        "GCP",
+        "Compute Engine",
+        "FastAPI",
+        "Python",
+        "Linux"
+      ]
+    }
+  ],
+  "sideProjects": [
+    {
+      "name": "CV Builder",
+      "year": "2026",
+      "tagline": "A résumé builder with versioning and public share links. It generates the PDF this site serves.",
+      "points": [
+        "Undo/redo across the whole document, PDF export, and public share tokens that render server-side.",
+        "Postgres on Neon through Prisma, file storage on Supabase, deployed on Vercel.",
+        "The résumé button at the top of this page is served by it."
+      ],
+      "stack": [
+        "Next.js 16",
+        "PostgreSQL (Neon)",
+        "Prisma",
+        "Supabase Storage",
+        "Zustand",
+        "Tailwind v4",
+        "Vercel"
+      ],
+      "linkTo": "resume",
+      "hrefLabel": "See a published résumé"
+    },
+    {
+      "name": "This portfolio",
+      "year": "2026",
+      "tagline": "A static Astro site on GitHub Pages, with a content editor that publishes edits as commits.",
+      "points": [
+        "Content lives in JSON; an admin page signs in with GitHub OAuth and commits edits to main.",
+        "A Cloudflare Worker holds the GitHub App key, so no write token ever reaches the browser.",
+        "Pushes to main trigger the GitHub Actions build and the Pages deploy."
+      ],
+      "stack": [
+        "Astro",
+        "GitHub Pages",
+        "Cloudflare Workers",
+        "GitHub App",
+        "OAuth"
+      ],
+      "href": "https://github.com/fajarmhr/fajarmhr.github.io",
+      "hrefLabel": "Source on GitHub"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Cloud & virtualization",
+      "level": "Production",
+      "items": [
+        "OpenStack (advanced)",
+        "Huawei FusionSphere",
+        "Private cloud / IaaS",
+        "Bare-metal containers",
+        "VNF / CNF operations"
+      ]
+    },
+    {
+      "group": "Systems & reliability",
+      "level": "Production",
+      "items": [
+        "Linux (advanced)",
+        "Capacity planning",
+        "Live migrations & cutovers",
+        "Maintenance windows",
+        "Performance tuning",
+        "Troubleshooting"
+      ]
+    },
+    {
+      "group": "Automation & configuration",
+      "level": "Production",
+      "items": [
+        "Python scripting",
+        "YAML / CFG templates",
+        "Low-level designs",
+        "Git"
+      ]
+    },
+    {
+      "group": "Networking",
+      "level": "Production",
+      "items": [
+        "IP, interface & routing",
+        "BGP / BFD",
+        "APN / DPI",
+        "4G / 5G core (MME, SMF, UPF)",
+        "NFVO / VNFLCM"
+      ]
+    },
+    {
+      "group": "Containers & IaC",
+      "level": "Lab & self-study",
+      "items": [
+        "Docker & Docker Compose",
+        "Kubernetes (GKE labs)",
+        "Terraform",
+        "Nginx load balancing"
+      ]
+    },
+    {
+      "group": "Cloud platforms & observability",
+      "level": "Lab & self-study",
+      "items": [
+        "Google Cloud (Compute Engine, GKE)",
+        "Grafana",
+        "Grafana k6",
+        "FastAPI",
+        "Next.js / Astro"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Huawei Indonesia",
+      "role": "Intermediate Cloud Core Network Engineer",
+      "period": "Jun 2023 – Present",
+      "points": [
+        "Deploy, configure and maintain production Huawei FusionSphere/OpenStack infrastructure carrying the 4G and 5G core networks of XL Axiata, Indosat Ooredoo Hutchison and Telkomsel.",
+        "Plan and deliver compute, storage and network capacity — OpenStack compute hosts, VMs and container workloads — so each platform takes on more traffic without downtime.",
+        "Deploy and operate virtualized and bare-metal containerized network functions: low-level design through to interface, routing and BGP/BFD bring-up, integration, reliability testing and customer UAT.",
+        "Execute nationwide platform upgrades across OpenStack, the VNF lifecycle-management platform (VNFLCM) and monitoring tooling, managing planned downtime, rollback and service continuity.",
+        "Write Python for health checks, reporting and routine operations, and maintain the YAML/CFG deployment templates that keep production sites configured consistently.",
+        "Administer and troubleshoot the Linux hosts underneath: performance tuning, incident support and day-to-day operations."
+      ]
+    },
+    {
+      "company": "Basic & Applied Research, Telkom University",
+      "role": "Mobile Core Research Assistant",
+      "period": "Mar 2023",
+      "points": [
+        "Built an open-source 5G standalone core and traced subscriber registration across the AMF, SMF and UPF.",
+        "Documented the signalling flow hop by hop as a reproducible reference; a journal submission was planned from it."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "Telkom University",
+      "degree": "Bachelor of Technology, Telecommunication Engineering",
+      "detail": "GPA 3.32 / 4.00",
+      "period": "Aug 2017 – Dec 2022"
+    }
+  ],
+  "languages": [
+    "Indonesian (Native)",
+    "English (Advanced)"
+  ],
+  "certifications": [
+    {
+      "name": "HCIA Cloud Computing",
+      "issuer": "Huawei",
+      "date": "Sep 2020",
+      "credentialId": "01010080280805089633746"
+    },
+    {
+      "name": "HCIA Routing & Switching",
+      "issuer": "Huawei",
+      "date": "Oct 2020",
+      "credentialId": "01010010139780805481667025"
+    },
+    {
+      "name": "HCIA Security",
+      "issuer": "Huawei",
+      "date": "Dec 2020",
+      "credentialId": "01010030139780806289767568"
+    }
+  ],
+  "awards": [
+    {
+      "title": "2nd Place, Huawei ICT Cloud Competition",
+      "issuer": "Huawei",
+      "date": "Dec 2020",
+      "detail": "National level"
+    },
+    {
+      "title": "3rd Place, Huawei ICT Cloud Selection",
+      "issuer": "Huawei",
+      "date": "Dec 2020",
+      "detail": "Campus level"
+    }
+  ]
+}

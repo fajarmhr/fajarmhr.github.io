@@ -1,0 +1,55 @@
+---
+// "Built on the side" — personal builds, shown as a 2-column zig-zag
+// so it never reads as a row of identical feature cards.
+import { sideProjects, resume } from "../data/profile";
+
+// Entries with linkTo: "resume" point at the published résumé, whose host and
+// share token live in the build environment rather than in content.json. With
+// either missing the link is simply dropped.
+const resumeLink =
+  resume.appUrl && resume.token
+    ? `${resume.appUrl.replace(/\/+$/, "")}/p/${encodeURIComponent(resume.token)}`
+    : "";
+const linkFor = (p: (typeof sideProjects)[number]) =>
+  p.linkTo === "resume" ? resumeLink : p.href ?? "";
+---
+
+{sideProjects.length > 0 && (
+  <section class="sec reveal" id="side">
+    <div class="sec-head">
+      <h2>Built on the side</h2>
+      <span class="n">{String(sideProjects.length).padStart(2, "0")} projects</span>
+    </div>
+    <p class="sec-note">
+      Things I run myself, outside the telecom platforms — where I own the
+      deployment, the database and the domain rather than operating someone
+      else's design.
+    </p>
+
+    <div class="side-list">
+      {sideProjects.map((p, i) => (
+        <article class="side-row reveal" style={`--i:${i}`}>
+          <div class="side-head">
+            <h3 class="side-name">{p.name}</h3>
+            <span class="side-year">{p.year}</span>
+            <p class="side-tag">{p.tagline}</p>
+          </div>
+          <div class="side-body">
+            {p.points.map((pt) => <p class="side-point">{pt}</p>)}
+            <ul class="tech-chips side-stack" aria-label={`${p.name} stack`}>
+              {p.stack.map((t) => <li class="tech-chip">{t}</li>)}
+            </ul>
+            {linkFor(p) && (
+              <div class="side-foot">
+                <a class="side-link" href={linkFor(p)} target="_blank" rel="noopener">
+                  {p.hrefLabel ?? "Open"}
+                  <span aria-hidden="true">&#8599;</span>
+                </a>
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+)}

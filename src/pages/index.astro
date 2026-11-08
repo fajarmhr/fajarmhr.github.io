@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import SelectedWork from "../components/SelectedWork.astro";
+import SideProjects from "../components/SideProjects.astro";
 import {
   profile, resume, facts, about, skills, experience, education, languages,
   certifications, awards,
@@ -19,6 +20,17 @@ const resumePreview = resumeConfigured
 const resumeDownload = resumeBase ? resumeBase + "/pdf?download=1" : "";
 
 const visibleLinks = profile.links.filter((l) => !/r[eé]sum[eé]/i.test(l.label));
+const heroLinks = visibleLinks.slice(0, 2);
+// The name animates letter by letter. Words stay whole (each is its own clip
+// box) while the delay index runs across the whole name, so the cascade reads
+// as one continuous sweep rather than restarting on every word.
+const nameWords = profile.name.split(/\s+/).filter(Boolean);
+let letterIndex = 0;
+const nameLetters = nameWords.map((word) =>
+  [...word].map((char) => ({ char, i: letterIndex++ }))
+);
+const badgeLink = profile.links.find((l) => /skills/i.test(l.label));
+const hasLabSkills = skills.some((s) => s.level && s.level !== "Production");
 
 // Absolute URLs for link previews (LinkedIn, Slack, X) and search engines.
 const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
@@ -57,38 +69,104 @@ const personLd = {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={pageTitle} />
     <meta name="twitter:card" content="summary_large_image" />
-    <!-- Only hide content for the scroll reveal when JS is actually running. -->
-    <script is:inline>document.documentElement.classList.add("js");</script>
+    <meta name="theme-color" content="#edeff2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14161a" media="(prefers-color-scheme: dark)" />
+
+    <!--
+      Runs before first paint: marks JS as available (so the reveal CSS may hide
+      content) and restores a saved theme choice, which avoids a flash of the
+      wrong palette. Storage can throw in private mode, hence the try/catch.
+    -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "light" || saved === "dark") {
+          document.documentElement.setAttribute("data-theme", saved);
+        }
+      } catch (e) {}
+    </script>
+
     <script type="application/ld+json" set:html={JSON.stringify(personLd)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <main class="wrap">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="progress" aria-hidden="true"></div>
+
+    <!-- STICKY HEADER — slides in once the hero scrolls away -->
+    <header class="bar">
+      <a class="bar-name" href="#main">{profile.name}</a>
+      <nav class="bar-nav" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="bar-end">
+        <button class="pill solid" data-open-resume><span>Résumé</span> <span class="tag">PDF</span></button>
+        <button class="theme" data-theme-toggle type="button" aria-label="Switch colour theme">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2" />
+            <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" />
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.9 6.9 0 0 0 10.8 10.8Z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Theme control for while the header is still hidden -->
+    <button class="theme theme-float" data-theme-toggle type="button" aria-label="Switch colour theme">
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" />
+      </svg>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.5 14.3A8.6 8.6 0 1 1 9.7 3.5a6.9 6.9 0 0 0 10.8 10.8Z" />
+      </svg>
+    </button>
+
+    <main class="wrap" id="main">
       <!-- HERO -->
-      <header class="hero reveal">
-        <div>
+      <header class="hero">
+        <div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div>
+
+        <div class="hero-text">
           <div class="avail eyebrow"><span class="dot"></span>{profile.available}</div>
-          <h1 class="name">{profile.name}</h1>
+
+          <h1 class="name" aria-label={profile.name}>
+            {nameLetters.map((chars) => (
+              <span class="w" aria-hidden="true">{chars.map(({ char, i }) => <span class="l" style={`--i:${i}`}>{char}</span>)}</span>
+            ))}
+          </h1>
+
           <p class="tagline">{profile.tagline}</p>
+
           <div class="meta">
-            <span class="s">{profile.role}</span>
+            <span>{profile.role}</span>
             <span class="sep">·</span>
-            <span class="s">{profile.location}</span>
+            <span>{profile.location}</span>
           </div>
+
           <div class="actions">
-            <button class="pill solid" data-open-resume>View résumé <span class="tag">PDF</span></button>
-            {visibleLinks.map((l) => (
+            <button class="pill solid" data-open-resume><span>View résumé</span> <span class="tag">PDF</span></button>
+            {heroLinks.map((l) => (
               <a class="pill" href={l.href} target="_blank" rel="noopener">
-                {l.label} <span class="tag">{l.handle}</span>
+                <span>{l.label}</span> <span class="tag">{l.handle}</span>
               </a>
             ))}
           </div>
+
+          <div class="scroll-cue" aria-hidden="true"><i></i>Scroll</div>
         </div>
+
         {profile.photo ? (
           <div class="photo" role="img" aria-label={profile.name} style={`background-image:url(${profile.photo})`}></div>
         ) : (
@@ -98,36 +176,55 @@ const personLd = {
 
       <!-- AT A GLANCE: the numbers a recruiter should leave with -->
       <dl class="glance reveal">
-        {facts.map((f) => (
-          <div class="fact"><dt>{f.label}</dt><dd>{f.value}</dd></div>
+        {facts.map((f, i) => (
+          <div class="fact" style={`--i:${i}`}>
+            <dt>{f.label}</dt>
+            <dd data-count={f.value}>{f.value}</dd>
+          </div>
         ))}
       </dl>
 
       <!-- ABOUT + SKILLS -->
-      <section class="two-col reveal">
+      <section class="two-col reveal" id="about">
         <div>
           <div class="col-label">About</div>
           {about.map((para) => <p class="about-p">{para}</p>)}
         </div>
         <div>
           <div class="col-label">Skills</div>
-          {skills.map((s) => (
-            <div class="skill-group">
-              <div class="g">{s.group}</div>
+          {skills.map((s, i) => (
+            <div class="skill-group reveal" data-level={s.level} style={`--i:${i}`}>
+              <div class="skill-head">
+                <span class="g">{s.group}</span>
+                {s.level && <span class="lv">{s.level}</span>}
+              </div>
               <div class="chips">{s.items.map((it) => <span class="chip">{it}</span>)}</div>
             </div>
           ))}
+          {hasLabSkills && (
+            <p class="skill-note">
+              <strong>Production</strong> groups are what I run on live operator platforms
+              every day. <strong>Lab &amp; self-study</strong> means course labs and my own
+              projects rather than production ownership
+              {badgeLink ? (
+                <> — the badge trail is on my <a href={badgeLink.href} target="_blank" rel="noopener">Google Skills profile</a>.</>
+              ) : "."}
+            </p>
+          )}
         </div>
       </section>
 
-      <!-- EXPERIENCE (ahead of the project detail, so the career timeline is found fast) -->
-      <section class="sec reveal">
-        <div class="sec-head"><span>Experience</span></div>
-        {experience.map((e) => (
-          <div class="exp-row reveal">
+      <!-- EXPERIENCE (ahead of project detail, so the timeline is found fast) -->
+      <section class="sec reveal" id="experience">
+        <div class="sec-head">
+          <h2>Experience</h2>
+          <span class="n">{experience[0].period}</span>
+        </div>
+        {experience.map((e, i) => (
+          <div class="exp-row reveal" style={`--i:${i}`}>
             <div class="exp-period">{e.period}</div>
             <div>
-              <h4 class="exp-role">{e.role}</h4>
+              <h3 class="exp-role">{e.role}</h3>
               <div class="exp-company">{e.company}</div>
               {e.points.map((pt) => <p class="exp-point">{pt}</p>)}
             </div>
@@ -138,14 +235,17 @@ const personLd = {
       <!-- SELECTED WORK -->
       <SelectedWork />
 
+      <!-- BUILT ON THE SIDE -->
+      <SideProjects />
+
       <!-- EDUCATION + LANGUAGES -->
       <section class="two-col reveal">
         <div>
-          <div class="col-label tb">Education</div>
+          <div class="col-label">Education</div>
           {education.map((ed) => (
             <div class="edu">
               <div class="edu-top">
-                <h4 class="edu-school">{ed.school}</h4>
+                <h3 class="edu-school">{ed.school}</h3>
                 <span class="edu-when">{ed.period}</span>
               </div>
               <div class="edu-detail">{ed.degree} · {ed.detail}</div>
@@ -153,31 +253,40 @@ const personLd = {
           ))}
         </div>
         <div>
-          <div class="col-label tb">Languages</div>
-          {languages.map((lg) => <div class="lang">{lg}</div>)}
+          <div class="col-label">Languages</div>
+          {languages.map((lg) => {
+            const parsed = lg.match(/^(.*?)\s*\((.*)\)\s*$/);
+            return (
+              <div class="lang">
+                <span>{parsed ? parsed[1] : lg}</span>
+                {parsed && <span>{parsed[2]}</span>}
+              </div>
+            );
+          })}
         </div>
       </section>
 
       <!-- CERTIFICATIONS + AWARDS -->
       <section class="two-col reveal">
         <div>
-          <div class="col-label tb">Certifications</div>
+          <div class="col-label">Certifications</div>
           {certifications.map((c) => (
             <div class="edu">
               <div class="edu-top">
-                <h4 class="edu-school">{c.name}</h4>
+                <h3 class="edu-school">{c.name}</h3>
                 <span class="edu-when">{c.date}</span>
               </div>
-              <div class="edu-detail">{c.issuer}{c.credentialId ? ` · ID ${c.credentialId}` : ""}</div>
+              <div class="edu-detail">{c.issuer}</div>
+              {c.credentialId && <div class="edu-id">ID {c.credentialId}</div>}
             </div>
           ))}
         </div>
         <div>
-          <div class="col-label tb">Awards</div>
+          <div class="col-label">Awards</div>
           {awards.map((a) => (
             <div class="edu">
               <div class="edu-top">
-                <h4 class="edu-school">{a.title}</h4>
+                <h3 class="edu-school">{a.title}</h3>
                 <span class="edu-when">{a.date}</span>
               </div>
               <div class="edu-detail">{a.issuer}{a.detail ? ` · ${a.detail}` : ""}</div>
@@ -187,25 +296,37 @@ const personLd = {
       </section>
 
       <!-- CONTACT -->
-      <section class="contact reveal">
+      <section class="contact reveal" id="contact">
         <div class="col-label">Get in touch</div>
-        <p class="contact-note">Hiring for a cloud infrastructure or platform role? I'd like to hear about it.</p>
+        <p class="contact-note">
+          Hiring for a cloud infrastructure or platform role? I'd like to hear about it.
+        </p>
         {profile.email && <a class="contact-mail" href={`mailto:${profile.email}`}>{profile.email}</a>}
         <div class="contact-links">
-          <button class="pill solid" data-open-resume>View résumé <span class="tag">PDF</span></button>
+          <button class="pill solid" data-open-resume><span>View résumé</span> <span class="tag">PDF</span></button>
           {visibleLinks.map((l) => (
             <a class="pill" href={l.href} target="_blank" rel="noopener">
-              {l.label} <span class="tag">{l.handle}</span>
+              <span>{l.label}</span> <span class="tag">{l.handle}</span>
             </a>
           ))}
         </div>
       </section>
     </main>
 
-    <footer class="foot">{profile.name} · {year}</footer>
+    <footer class="foot">
+      <span>{profile.name} · {year}</span>
+      <span>{profile.location}</span>
+    </footer>
 
     <!-- RÉSUMÉ PREVIEW MODAL -->
-    <div id="resume-modal" class="overlay" data-preview={resumePreview}>
+    <div
+      id="resume-modal"
+      class="overlay"
+      data-preview={resumePreview}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Résumé preview"
+    >
       <div class="sheet">
         <div class="sheet-head">
           <span class="serif">Résumé</span>
@@ -227,9 +348,10 @@ const personLd = {
             <div class="resume-empty">
               <div class="serif-it">Connect your CV Builder</div>
               <p>
-                Publish a résumé in your CV Builder app, then set <code>appUrl</code> and
-                <code>token</code> in <code>src/data/profile.ts</code>. Your latest résumé
-                will appear here automatically.
+                Publish a résumé in CV Builder, then set <code>appUrl</code> under
+                <strong> Résumé connection</strong> in the admin editor and add the
+                <code> RESUME_TOKEN</code> secret. The latest résumé then appears here
+                automatically.
               </p>
             </div>
           )}
@@ -238,45 +360,132 @@ const personLd = {
     </div>
 
     <script>
-      // ── scroll reveal ──
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
-      if (reduce) {
-        els.forEach((e) => e.classList.add("in"));
-      } else {
-        const check = () => {
-          const vh = window.innerHeight || document.documentElement.clientHeight;
-          els.forEach((e) => {
-            if (!e.classList.contains("in") && e.getBoundingClientRect().top < vh * 0.92) {
-              e.classList.add("in");
-            }
-          });
+      const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+      // ── count-up on reveal ──────────────────────────────────────────────
+      // Only values whose numeric part has two or more digits animate. A bare
+      // "3", or a label like "5G SA", would just flicker — those stay static.
+      const counted = new WeakSet<HTMLElement>();
+      function countUp(el: HTMLElement) {
+        if (counted.has(el)) return;
+        counted.add(el);
+        const raw = el.dataset.count ?? el.textContent ?? "";
+        const parts = raw.match(/^(\D*?)(\d[\d.,]*)([\s\S]*)$/);
+        if (!parts) return;
+        const digits = parts[2].replace(/,/g, "");
+        if (digits.replace(".", "").length < 2) return;
+        const target = parseFloat(digits);
+        if (!isFinite(target)) return;
+        const decimals = (digits.split(".")[1] || "").length;
+        const started = performance.now();
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - started) / 1000);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = parts[1] + (target * eased).toFixed(decimals) + parts[3];
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = raw;
         };
-        window.addEventListener("scroll", check, { passive: true });
-        window.addEventListener("resize", check);
-        requestAnimationFrame(() => requestAnimationFrame(check));
-        setTimeout(check, 400);
+        el.textContent = parts[1] + (0).toFixed(decimals) + parts[3];
+        requestAnimationFrame(tick);
       }
 
-      // ── résumé modal ──
+      // ── scroll reveal ───────────────────────────────────────────────────
+      const revealEls = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+      const show = (el: HTMLElement) => {
+        el.classList.add("in");
+        if (!reduce) el.querySelectorAll<HTMLElement>("[data-count]").forEach(countUp);
+      };
+
+      if (reduce || !("IntersectionObserver" in window)) {
+        revealEls.forEach(show);
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              show(entry.target as HTMLElement);
+              io.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.04 }
+        );
+        revealEls.forEach((el) => io.observe(el));
+      }
+
+      // ── sticky header, driven by the hero leaving the viewport ──────────
+      const hero = document.querySelector(".hero");
+      if (hero && "IntersectionObserver" in window) {
+        new IntersectionObserver(
+          ([entry]) => document.body.classList.toggle("scrolled", !entry.isIntersecting),
+          { rootMargin: "-78px 0px 0px 0px", threshold: 0 }
+        ).observe(hero);
+      }
+
+      // ── magnetic pills + work-row spotlight (desktop pointers only) ─────
+      if (fine) {
+        if (!reduce) {
+          document.querySelectorAll<HTMLElement>(".pill").forEach((el) => {
+            el.addEventListener("pointermove", (ev) => {
+              const r = el.getBoundingClientRect();
+              const dx = (ev.clientX - (r.left + r.width / 2)) / (r.width / 2);
+              const dy = (ev.clientY - (r.top + r.height / 2)) / (r.height / 2);
+              el.style.setProperty("--mx", (dx * 4).toFixed(2));
+              el.style.setProperty("--my", (dy * 3).toFixed(2));
+            });
+            el.addEventListener("pointerleave", () => {
+              el.style.setProperty("--mx", "0");
+              el.style.setProperty("--my", "0");
+            });
+          });
+        }
+
+        document.querySelectorAll<HTMLElement>(".work-row").forEach((row) => {
+          row.addEventListener("pointermove", (ev) => {
+            const r = row.getBoundingClientRect();
+            row.style.setProperty("--sx", `${((ev.clientX - r.left) / r.width) * 100}%`);
+            row.style.setProperty("--sy", `${((ev.clientY - r.top) / r.height) * 100}%`);
+          });
+        });
+      }
+
+      // ── theme toggle ────────────────────────────────────────────────────
+      const root = document.documentElement;
+      document.querySelectorAll<HTMLElement>("[data-theme-toggle]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const systemDark = matchMedia("(prefers-color-scheme: dark)").matches;
+          const current = root.getAttribute("data-theme") ?? (systemDark ? "dark" : "light");
+          const next = current === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", next);
+          try { localStorage.setItem("theme", next); } catch (e) {}
+        });
+      });
+
+      // ── résumé modal ────────────────────────────────────────────────────
       const modal = document.getElementById("resume-modal");
       const frame = document.getElementById("resume-frame") as HTMLIFrameElement | null;
       const preview = modal?.dataset.preview || "";
+      let lastFocus: HTMLElement | null = null;
+
       const open = () => {
         if (!modal) return;
+        lastFocus = document.activeElement as HTMLElement;
         modal.classList.add("open");
         document.body.style.overflow = "hidden";
         if (frame && preview && !frame.getAttribute("src")) frame.setAttribute("src", preview);
+        modal.querySelector<HTMLElement>("[data-close-resume]")?.focus();
       };
       const close = () => {
         if (!modal) return;
         modal.classList.remove("open");
         document.body.style.overflow = "";
+        lastFocus?.focus();
       };
+
       document.querySelectorAll("[data-open-resume]").forEach((b) => b.addEventListener("click", open));
-      modal?.addEventListener("click", (e) => { if (e.target === modal) close(); });
       document.querySelectorAll("[data-close-resume]").forEach((b) => b.addEventListener("click", close));
-      window.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+      modal?.addEventListener("click", (ev) => { if (ev.target === modal) close(); });
+      window.addEventListener("keydown", (ev) => { if (ev.key === "Escape") close(); });
     </script>
   </body>
 </html>

@@ -4,9 +4,10 @@ import ProjectCard from "./ProjectCard.astro";
 import { projects } from "../data/profile";
 ---
 
-<section class="sec reveal">
-  <div class="work-head">
-    <span class="eyebrow">Selected work</span>
+<section class="sec reveal" id="work">
+  <div class="sec-head">
+    <h2>Selected work</h2>
+    <span class="n">{String(projects.length).padStart(2, "0")} projects</span>
   </div>
   <p class="sec-note">
     Newest first. Each project leads with the scale it ran at; open the

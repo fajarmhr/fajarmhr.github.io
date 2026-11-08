@@ -1,0 +1,41 @@
+---
+import "../styles/global.css";
+import "../styles/admin.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Content desk · Fajar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body class="admin-body">
+    <main class="admin-shell">
+      <header class="admin-topbar">
+        <a class="admin-brand" href="/" aria-label="Back to portfolio"><span class="admin-brand-mark">FM</span><span><span class="admin-eyebrow">Personal website</span><span class="admin-brand-name">Content desk</span></span></a>
+        <div class="admin-account"><span id="account-label">Private workspace</span><button id="logout-button" class="admin-quiet" hidden>Sign out</button></div>
+      </header>
+
+      <section id="login-view" class="admin-login">
+        <div class="admin-login-copy"><span class="admin-eyebrow">Portfolio · Admin</span><h1>Keep your story<br /><em>up to date.</em></h1><p>Sign in with the GitHub account authorized for this site to edit your profile, experience, and selected work.</p><button id="login-button" class="admin-primary">Continue with GitHub <span aria-hidden="true">↗</span></button><p id="login-message" class="admin-message" role="status"></p></div>
+        <aside class="admin-login-note"><span class="admin-eyebrow">A quiet place to edit</span><p>Changes are committed to your portfolio repository. GitHub Actions publishes the update after the commit.</p><div class="admin-note-line"><span class="admin-dot"></span>Only your allowed GitHub account can edit</div></aside>
+      </section>
+
+      <section id="editor-view" class="admin-editor" hidden>
+        <div class="admin-heading"><div><span class="admin-eyebrow">Portfolio · Content</span><h1>Content, in one place.</h1><p>Edit a section, check the live draft preview, then publish it to your site.</p></div><div class="admin-actions"><span id="save-status" class="admin-save-status">Loading content…</span><button id="publish-button" class="admin-primary" disabled>Publish changes <span aria-hidden="true">↗</span></button></div></div>
+        <div class="admin-workspace">
+          <nav id="section-nav" class="admin-nav" aria-label="Content sections"></nav>
+          <div class="admin-edit-column"><div id="section-heading" class="admin-section-heading"></div><form id="content-form" class="admin-fields"></form></div>
+          <aside class="admin-preview"><div class="preview-top"><span class="admin-eyebrow">Draft preview</span><a href="/" target="_blank" rel="noopener">Published site ↗</a></div><div id="preview-content" class="preview-content"></div><p class="preview-foot">This summary updates as you edit. Publishing rebuilds the full portfolio.</p></aside>
+        </div>
+      </section>
+      <footer class="admin-footer"><span>FOG &amp; SLATE</span><span>Private content workspace</span></footer>
+    </main>
+    <script is:inline src="/admin.js"></script>
+  </body>
+</html>

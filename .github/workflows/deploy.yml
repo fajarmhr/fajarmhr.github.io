@@ -26,13 +26,14 @@ jobs:
         with:
           # Astro 6 requires Node >=22.12.0 (the action defaults to Node 20).
           node-version: 22
-        # Résumé connection (optional). Add these as repo Secrets:
-        #   Settings → Secrets and variables → Actions → New repository secret
+        # Contact details and the CV Builder connection are not in the repo.
+        # `secrets.X || vars.X` so each works whether it was stored as an
+        # Actions secret or an Actions variable.
         env:
-          RESUME_APP_URL: ${{ secrets.RESUME_APP_URL }}
-          RESUME_TOKEN: ${{ secrets.RESUME_TOKEN }}
-          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
-          CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL || vars.CONTACT_EMAIL }}
+          CONTACT_PHONE: ${{ secrets.CONTACT_PHONE || vars.CONTACT_PHONE }}
+          RESUME_APP_URL: ${{ secrets.RESUME_APP_URL || vars.RESUME_APP_URL }}
+          RESUME_TOKEN: ${{ secrets.RESUME_TOKEN || vars.RESUME_TOKEN }}
         # If your Astro project is NOT at the repo root, add `path: ./subdir` under `with:` above.
 
   deploy:

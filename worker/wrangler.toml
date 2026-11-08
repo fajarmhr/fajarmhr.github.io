@@ -1,0 +1,11 @@
+name = "fajar-portfolio-admin"
+main = "src/index.js"
+compatibility_date = "2026-11-07"
+
+[vars]
+GITHUB_OWNER = "fajarmhr"
+GITHUB_REPO = "fajarmhr.github.io"
+GITHUB_BRANCH = "main"
+GITHUB_CONTENT_PATH = "src/data/content.json"
+SITE_ORIGIN = "https://fajarmhr.github.io"
+ALLOWED_GITHUB_LOGIN = "fajarmhr"

@@ -1,110 +1,111 @@
 # Mohamad Fajar Mahardika — Portfolio
 
-A fast, content-driven portfolio built with [Astro](https://astro.build). Ships almost
-zero JavaScript, and **all content lives in one file** — `src/data/profile.ts`. Edit that,
-commit, push, and GitHub Pages rebuilds automatically.
+A content-driven portfolio built with Astro and published on GitHub Pages. Editable
+content lives in `src/data/content.json`; the `/admin/` editor commits changes to GitHub.
 
----
-
-## 1. Run it locally
-
-You need **Node 18+** and a terminal.
+## Run locally
 
 ```bash
-cd astro-portfolio
-npm install        # one time
-npm run dev        # open http://localhost:4321
+npm install
+npm run dev
 ```
 
-- `npm run build` → production build into `dist/`
-- `npm run preview` → preview the production build locally
+`npm run build` builds the static site. The admin API must be deployed and configured
+before the login button can be used.
 
-## 2. Edit your content
+## Edit content
 
-Everything is in **`src/data/profile.ts`** — profile, links, projects, experience,
-skills, education, languages, and the résumé connection. No layout code to touch.
+Open `/admin/` and sign in with the allowed GitHub account. The editor manages your
+profile, social links, facts, about text, projects, side projects, work history, skills,
+education, languages, certifications, and awards — everything held in
+`src/data/content.json`, which is public.
 
-- **Add a photo:** drop an image in `public/` (e.g. `public/me.jpg`) and set
-  `profile.photo = "/me.jpg"`.
-- **Change the accent / colors:** edit the CSS variables at the top of
-  `src/styles/global.css` (`--accent` is the Clay highlight; `--bg`, `--ink`, etc.).
+Contact details and the CV Builder connection are deliberately not in that file, so they
+never enter the repository. They come from the build environment instead and are not
+available in the admin editor:
 
-## 3. Connect the live résumé (CV Builder)
+| Variable | Purpose |
+| --- | --- |
+| `CONTACT_EMAIL` | Address shown in the hero and contact section |
+| `CONTACT_PHONE` | Optional; no phone is rendered when blank |
+| `RESUME_APP_URL` | CV Builder origin, no path or trailing slash |
+| `RESUME_TOKEN` | Share token of the published résumé |
 
-The "View résumé" button shows an **on-screen preview that always reflects your latest
-published CV** — no re-deploy needed. The values are read from the **environment**, so the
-token never lives in this public repo.
+For local builds, copy `.env.example` to `.env` and fill these in. For production, add
+them under **Settings → Secrets and variables → Actions** — either as secrets or as
+variables, since the workflow reads `secrets.X || vars.X` for each. The Pages workflow
+injects them only while building the site.
 
-1. In your CV Builder app, **publish** a résumé and copy its **share token**.
-2. **Locally:** copy `.env.example` → `.env` and fill it in:
-   ```bash
-   RESUME_APP_URL=https://your-cv-app.vercel.app
-   RESUME_TOKEN=the-share-token
-   ```
-3. **On the live site:** add the same two keys as repository secrets —
-   **Settings → Secrets and variables → Actions → New repository secret**
-   (`RESUME_APP_URL`, `RESUME_TOKEN`). The deploy workflow injects them at build time.
+These values are compiled into the generated HTML, so they stay visible on the published
+page. Keeping them in the environment keeps them out of git history; it does not hide
+them from the web. A production build missing any of them logs a warning and omits the
+contact link or the résumé preview rather than failing.
 
-Until configured, the modal shows a friendly "Connect your CV Builder" message.
+## Configure the admin service
 
----
+The admin interface is static on GitHub Pages. A Cloudflare Worker handles GitHub OAuth
+and uses a repository-scoped GitHub App token to read and write content. Neither the
+GitHub App private key nor its installation token is exposed to the browser.
 
-## 4. Deploy to GitHub Pages
+### 1. Create GitHub apps
 
-This repo includes a workflow at `.github/workflows/deploy.yml` that builds and deploys
-on every push to `main`.
+- Create a **GitHub OAuth App**. Set the homepage URL to `https://fajarmhr.github.io`.
+  After deploying the Worker, set its callback URL to
+  `https://<worker-host>/auth/callback`.
+- Create a **GitHub App** with **Contents: Read and write** permission. Install it only
+  on `fajarmhr/fajarmhr.github.io`. Record the App ID, installation ID, and private key.
+  Do not grant Actions, administration, or other repository permissions.
 
-### A. Pick your repo type — and set `astro.config.mjs` to match
+### 2. Deploy the Cloudflare Worker
 
-| Your goal | Repo name | `astro.config.mjs` `base` |
-|---|---|---|
-| **Main site** at `https://fajarmhr.github.io` | `fajarmhr.github.io` | `base: "/"` ✅ (default) |
-| A project site at `https://fajarmhr.github.io/portfolio` | `portfolio` (any name) | `base: "/portfolio"` |
-
-> The config is preset for the **main site**. If you use a project repo, uncomment the
-> `base: "/portfolio"` line and match it to your repo name.
-
-### B. Push the code
-
-If the Astro project is at the **repo root**, move the contents of `astro-portfolio/` up
-one level first (so `package.json` sits at the repo root). Otherwise, keep the folder and
-uncomment the `path: ./astro-portfolio` lines in `deploy.yml`.
+From `worker/`, install Wrangler and authenticate with Cloudflare:
 
 ```bash
-git init
-git add .
-git commit -m "Portfolio"
-git branch -M main
-git remote add origin https://github.com/fajarmhr/fajarmhr.github.io.git
-git push -u origin main
+npm install
+npx wrangler login
 ```
 
-### C. Turn on Pages (one time)
+Add these non-secret settings under `[vars]` in `worker/wrangler.toml`:
+`GITHUB_OAUTH_CLIENT_ID`, `GITHUB_APP_ID`, and `GITHUB_APP_INSTALLATION_ID`. The repo,
+branch, allowed login, and site origin are already configured there.
 
-On GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+Store secrets in Cloudflare, not in Git:
 
-That's it. The Action runs on push; when it finishes (green check in the **Actions** tab),
-your site is live at the URL above. Every future `git push` redeploys automatically.
+```bash
+npx wrangler secret put GITHUB_OAUTH_CLIENT_SECRET
+npx wrangler secret put GITHUB_APP_PRIVATE_KEY
+npx wrangler secret put SESSION_SECRET
+npx wrangler deploy
+```
 
----
+Use a random `SESSION_SECRET` with at least 32 characters. The deployed Worker URL is
+used for the OAuth callback and admin API.
+
+### 3. Connect the site
+
+Set the OAuth callback to `https://<worker-host>/auth/callback`. Put the deployed Worker
+URL in `public/admin-config.json` as `apiUrl`, then deploy the site to GitHub Pages. The
+admin page is not linked from the public portfolio. Its API allows only the configured
+site origin and GitHub account `fajarmhr`.
+
+Publishing commits directly to `main`, which starts the existing Pages workflow. GitHub
+history can be used to inspect or revert a published edit.
+
+## Deploy the site
+
+The workflow at `.github/workflows/deploy.yml` builds and deploys on pushes to `main`.
+Set GitHub Pages **Build and deployment → Source** to **GitHub Actions**.
 
 ## Project structure
 
+```text
+src/data/content.json        Editable portfolio content
+src/data/profile.ts          Typed data exports used by Astro
+src/pages/index.astro        Public portfolio
+src/pages/admin.astro        Admin interface shell
+public/admin.js              Admin editor
+public/admin-config.json     Public Worker endpoint configuration
+worker/src/index.js          OAuth and GitHub App API
+worker/wrangler.toml         Worker configuration
+.github/workflows/deploy.yml GitHub Pages deployment
 ```
-astro-portfolio/
-├─ src/
-│  ├─ data/profile.ts      ← YOUR CONTENT (the only file you normally edit)
-│  ├─ pages/index.astro    ← page layout + résumé modal + scroll reveal
-│  └─ styles/global.css    ← Fog & Slate palette + all styles
-├─ public/                 ← static assets (photo, .nojekyll)
-├─ astro.config.mjs        ← site URL + base path
-└─ .github/workflows/deploy.yml  ← auto-deploy to GitHub Pages
-```
-
-## Troubleshooting
-
-- **CSS/JS 404s or unstyled site** → your `base` doesn't match the repo. See the table above.
-- **Action fails** → confirm Pages Source is set to **GitHub Actions** (step C).
-- **Résumé preview blank** → check `appUrl` + `token`; the CV Builder résumé must be
-  *published*. Some mobile browsers don't render PDFs inline — the modal's **Open ↗** /
-  **Download** buttons always work.
