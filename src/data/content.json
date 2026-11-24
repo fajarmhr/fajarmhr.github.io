@@ -401,33 +401,53 @@
       "name": "HCIA Cloud Computing",
       "issuer": "Huawei",
       "date": "Sep 2020",
-      "credentialId": "01010080280805089633746"
+      "detail": "",
+      "credentialId": "01010080280805089633746",
+      "validThrough": "Sep 20, 2023",
+      "driveFileId": "1du9tLyPIlkQ63wEhCK1lqar60n1EA2i0"
     },
     {
       "name": "HCIA Routing & Switching",
       "issuer": "Huawei",
       "date": "Oct 2020",
-      "credentialId": "01010010139780805481667025"
+      "detail": "",
+      "credentialId": "01010010139780805481667025",
+      "validThrough": "Oct 18, 2023",
+      "driveFileId": "1QNuRm4Okt9hBmteGmMfboFHFdzm4gzra"
     },
     {
       "name": "HCIA Security",
       "issuer": "Huawei",
       "date": "Dec 2020",
-      "credentialId": "01010030139780806289767568"
+      "detail": "",
+      "credentialId": "01010030139780806289767568",
+      "validThrough": "Dec 20, 2023",
+      "driveFileId": "1tRmchaNARSFhx-v1SlrzKSO_cTQLZRZ4"
+    },
+    {
+      "name": "Bangkit Cloud Computing",
+      "issuer": "Bangkit Academy",
+      "date": "Jul 2021",
+      "detail": "Certificate of completion",
+      "credentialId": "",
+      "validThrough": "",
+      "driveFileId": "1SrZUd6RUGtsOfFR3EHF9N1ai8-wrvbxE"
     }
   ],
   "awards": [
     {
-      "title": "2nd Place, Huawei ICT Cloud Competition",
-      "issuer": "Huawei",
+      "title": "2nd Place, Huawei ICT Competition",
+      "issuer": "Huawei ASEAN Academy Indonesia",
       "date": "Dec 2020",
-      "detail": "National level"
+      "detail": "Cloud Track · National Round",
+      "driveFileId": "15QXUoi65I90DvJQhauYULgxWvZzXU4G-"
     },
     {
-      "title": "3rd Place, Huawei ICT Cloud Selection",
-      "issuer": "Huawei",
+      "title": "3rd Place, Huawei ICT Competition",
+      "issuer": "Huawei ASEAN Academy Indonesia",
       "date": "Dec 2020",
-      "detail": "Campus level"
+      "detail": "Cloud Track · Preliminary Round",
+      "driveFileId": "1gBuWXeVOLJufzjdfRNTrRl7TkwYjYAEL"
     }
   ]
 }

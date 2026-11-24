@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import SelectedWork from "../components/SelectedWork.astro";
 import SideProjects from "../components/SideProjects.astro";
+import Credentials from "../components/Credentials.astro";
 import {
   profile, resume, facts, about, skills, experience, education, languages,
   certifications, awards,
@@ -106,6 +107,7 @@ const personLd = {
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#work">Work</a>
+        {(certifications.length > 0 || awards.length > 0) && <a href="#credentials">Credentials</a>}
         <a href="#contact">Contact</a>
       </nav>
       <div class="bar-end">
@@ -266,34 +268,7 @@ const personLd = {
         </div>
       </section>
 
-      <!-- CERTIFICATIONS + AWARDS -->
-      <section class="two-col reveal">
-        <div>
-          <div class="col-label">Certifications</div>
-          {certifications.map((c) => (
-            <div class="edu">
-              <div class="edu-top">
-                <h3 class="edu-school">{c.name}</h3>
-                <span class="edu-when">{c.date}</span>
-              </div>
-              <div class="edu-detail">{c.issuer}</div>
-              {c.credentialId && <div class="edu-id">ID {c.credentialId}</div>}
-            </div>
-          ))}
-        </div>
-        <div>
-          <div class="col-label">Awards</div>
-          {awards.map((a) => (
-            <div class="edu">
-              <div class="edu-top">
-                <h3 class="edu-school">{a.title}</h3>
-                <span class="edu-when">{a.date}</span>
-              </div>
-              <div class="edu-detail">{a.issuer}{a.detail ? ` · ${a.detail}` : ""}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Credentials {certifications} {awards} />
 
       <!-- CONTACT -->
       <section class="contact reveal" id="contact">

@@ -21,7 +21,8 @@
     challenge: "Challenge", implementation: "Implementation", outcome: "Outcome", group: "Group", items: "Items",
     level: "Evidence level", hrefLabel: "Link label", tagline: "One-line summary",
     company: "Company", period: "Period", points: "Highlights", school: "Institution", degree: "Degree", detail: "Details",
-    issuer: "Issuer", date: "Date", credentialId: "Credential ID", facts: "Facts", about: "About paragraphs",
+    issuer: "Issuer", date: "Date", credentialId: "Credential ID", validThrough: "Valid through",
+    driveFileId: "Google Drive file ID", facts: "Facts", about: "About paragraphs",
   };
   const titles = Object.fromEntries(sections.map(([key, title]) => [key, title]));
   const $ = (selector) => document.querySelector(selector);
@@ -132,7 +133,7 @@
         entry.className = "admin-entry";
         entry.open = value.length <= 3;
         const summary = document.createElement("summary");
-        const name = typeof item === "object" && item ? item.title || item.label || item.group || item.company || item.school || item.value || pretty(key) : `${pretty(key)} ${index + 1}`;
+        const name = typeof item === "object" && item ? item.title || item.name || item.label || item.group || item.company || item.school || item.value || pretty(key) : `${pretty(key)} ${index + 1}`;
         summary.textContent = `${String(index + 1).padStart(2, "0")}  ${name}`;
         const remove = document.createElement("button");
         remove.type = "button"; remove.className = "admin-remove"; remove.textContent = "Remove";

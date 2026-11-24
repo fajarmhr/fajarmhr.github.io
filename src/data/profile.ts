@@ -31,8 +31,16 @@ export interface SideProject {
 }
 export interface ExperienceItem { company: string; role: string; period: string; points: string[]; }
 export interface EducationItem { school: string; degree: string; detail: string; period: string; }
-export interface Certification { name: string; issuer: string; date: string; credentialId?: string; }
-export interface Award { title: string; issuer: string; date: string; detail?: string; }
+export interface CredentialDocument {
+  issuer: string;
+  date: string;
+  detail?: string;
+  driveFileId?: string;
+  credentialId?: string;
+  validThrough?: string;
+}
+export interface Certification extends CredentialDocument { name: string; }
+export interface Award extends CredentialDocument { title: string; }
 
 // Editable site content is kept in content.json and is public.
 //
